@@ -2,7 +2,7 @@ package trabalhopratico;
 
 /**
  *
- * @author Joao
+ * @author Joao & Miguel
  */
 public class Autor {
     private static int sequencia = 0;
