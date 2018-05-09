@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author abs
+ * 
  */
 public class HttpRequestFunctions {
     public static void httpRequest1(String link, String pesquisa, String outFile) throws IOException {

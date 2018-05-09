@@ -30,7 +30,7 @@ public class trabalhopratico {
 
         String linha;
         String nome1 = null;
-        StringBuilder data = new StringBuilder();  //ano de nascimeto 
+        StringBuilder data = new StringBuilder();  //ano de nascimento 
         StringBuilder generos = new StringBuilder();  //para agregar todos os géneros (podem existir vários)
 
         while (ler.hasNextLine()) {
