@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import net.sf.saxon.s9api.SaxonApiException;
+import net.sf.saxon.s9api.XdmValue;
+import xpath.XPathFunctions;
 
 public class trabalhopratico {
 
@@ -50,7 +53,7 @@ public class trabalhopratico {
         return aux;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SaxonApiException {
         System.out.println("Autor a pesquisa: ");
         Scanner ler = new Scanner(System.in);  //PARA LER DA CONSOLA
         String linha;
@@ -58,5 +61,23 @@ public class trabalhopratico {
         Autor aux = procuraAutor(linha);
 
         System.out.println("Nome: " + aux.getNome() + " Data: " + aux.getData_nasc() + " Generos: " + aux.getGeneros());
+        
+        
+        
+        //pesquisa nº2 -- ficha 6
+        
+        String n = "Rato";
+        String xp="//produto[contains(nome,'"+n+"')]/nome";
+        XdmValue res = XPathFunctions.executaXpath(xp, "../Integracao-de-Dados/Ficheiros/produtos.xml");
+        String s = XPathFunctions.listaResultado(res);
+        
+        if (res==null)
+            System.out.println("Ficheiro XML não existe");
+        else if(res.size() == 0)
+            System.out.println("Sem Resultados");
+        else
+            System.out.println(s);
     }
+    
+    
 }
