@@ -32,6 +32,7 @@ public class trabalhopratico {
         Matcher m1, m2, m3;
 
         String linha;
+        
         String nome1 = null;
         StringBuilder data = new StringBuilder();  //ano de nascimento 
         StringBuilder generos = new StringBuilder();  //para agregar todos os géneros (podem existir vários)

@@ -14,8 +14,9 @@ import java.util.logging.Logger;
 
 /**
  *
- * 
+ *   
  */
+
 public class HttpRequestFunctions {
     public static void httpRequest1(String link, String pesquisa, String outFile) throws IOException {
         URL url;
