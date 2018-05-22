@@ -54,7 +54,7 @@ public class trabalhopratico {
     }
 
     public static void main(String[] args) throws IOException, SaxonApiException {
-        System.out.println("Autor a pesquisa: ");
+        System.out.println("Autor a pesquisar: ");
         Scanner ler = new Scanner(System.in);  //PARA LER DA CONSOLA
         String linha;
         linha = ler.nextLine();
@@ -66,7 +66,7 @@ public class trabalhopratico {
         
         //pesquisa nº2 -- ficha 6
         
-        String n = "Rato";
+        String n = "Livros: ";
         String xp="//produto[contains(nome,'"+n+"')]/nome";
         XdmValue res = XPathFunctions.executaXpath(xp, "../Integracao-de-Dados/Ficheiros/produtos.xml");
         String s = XPathFunctions.listaResultado(res);
