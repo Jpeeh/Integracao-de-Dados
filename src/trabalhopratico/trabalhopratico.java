@@ -89,39 +89,47 @@ public class trabalhopratico {
         return generos;
     }
 
-    public static String procuraNacionalidade(String nome) throws FileNotFoundException, IOException {
-        //ESTÁ A RETORNAR SEMPRE O VALOR NULL, CORRIGIR (PROVAVELMENTE A EXPRESSAO REGULAR ESTÁ ERRADA)!!!
-
-        String er = "<td style=\"vertical-align: top; text-align: left; padding:4px\">(?:<a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">(?:[^<]+</a>, )?<img alt=\"[^\"]*\" src=\"[^\"]+\" width=\"[^\"]+\" height=\"[^\"]+\" class=\"[^\"]+\" (?:srcset=\"[^\"]+\" )?data-file-width=\"[^\"]+\" data-file-height=\"[^\"]+\" />(?:</a>)?(?:&#160;)?[^<]+<a href=\"/wiki/[^\"]+\" title=\"[^\"]+\">([^<]+)</a>)?(?:(?:<img alt=\"[^\"]*\" src=\"[^\"]*\" width=\"[^\"]*\" height=\"[^\"]*\" class=\"[^\"]*\" srcset=\"[^\"]*\" data-file-width=\"[^\"]*\" data-file-height=\"[^\"]*\" />(?:&#160;)?)?(?:<a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">)?([^<]+)(?:</a>)?)?</td>|<td style=\"vertical-align: top; text-align: left; padding:4px\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\"><img alt=\"[^\"]*\" src=\"[^\"]*\" width=\"[^\"]*\" height=\"[^\"]*\" class=\"[^\"]*\" srcset=\"[^\"]*\" data-file-width=\"[^\"]*\" data-file-height=\"[^\"]*\" /></a> ([^<]+)</td>|<td style=\"vertical-align: top; text-align: left; padding:4px\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\"><img alt=\"[^\"]*\" src=\"[^\"]*\" width=\"[^\"]*\" height=\"[^\"]*\" class=\"[^\"]*\" srcset=\"[^\"]*\" data-file-width=\"[^\"]*\" data-file-height=\"[^\"]*\" /></a> <a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a>,<td />";
+    public static String procura_Nacionalidade(String nome) throws FileNotFoundException, IOException {
+        //EXPRESÕES REGULARES PARA O TÓPICO NACIONALIDADE, FALTA IMPLEMENTAR PARA A NACIONALIDADE QUE ESTÁ NO NASCIMENTO
+        String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Nacionalidade</td>";
+        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><a href=\"/wiki/Irlandeses\" title=\"Irlandeses\">([^<]+)</a></td>";
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
 
         Pattern p = Pattern.compile(er);
-        Matcher m;
+        Pattern p1 = Pattern.compile(er1);
         Scanner ler;
         ler = new Scanner(new FileInputStream("autores.html"));
-        String nacionalidade = null;
+        String nacionalidade;
         String linha;
 
         while (ler.hasNextLine()) {
             linha = ler.nextLine();
-            m = p.matcher(linha);
+            Matcher m = p.matcher(linha);
             if (m.find()) {
-                nacionalidade = m.group(26);
+                linha = ler.nextLine();
+                Matcher m2 = p1.matcher(linha);
+                if (m2.find()) {
+                    ler.close();
+                    nacionalidade = m2.group(1);
+                    return nacionalidade;
+                }
             }
         }
         ler.close();
-        return nacionalidade;
+        return null;
     }
 
     public static String procura_DataMorte(String nome) throws IOException {
         String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Morte</td>";
-        String er1 = "<a href=\"/wiki/([^<]+)\" title=\"([^<]+)\">([^<]+)</a> de <a href=\"/wiki/([^<]+)\" title=\"([^<]+)\">([^<]+)</a>";
+        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><span style=\"white-space:nowrap;\"><a href=\"/wiki/30_de_novembro\" title=\"30 de novembro\">([^<]+)</a> de <a href=\"/wiki/1900\" title=\"1900\">1900</a>&#160;(46&#160;anos)</span><br /><a href=\"/wiki/Paris\" title=\"Paris\">Paris</a>, <a href=\"/wiki/Fran%C3%A7a\" title=\"França\"><img alt=\"França\" src=\"//upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/22px-Flag_of_France.svg.png\" width=\"22\" height=\"15\" class=\"thumbborder\" srcset=\"//upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/33px-Flag_of_France.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/44px-Flag_of_France.svg.png 2x\" data-file-width=\"900\" data-file-height=\"600\" /></a> <a href=\"/wiki/Terceira_Rep%C3%BAblica_Francesa\" title=\"Terceira República Francesa\">França</a></td>";
+
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
 
         Pattern p = Pattern.compile(er);
         Pattern p2 = Pattern.compile(er1);
+        Matcher m2;
         Scanner ler;
         ler = new Scanner(new FileInputStream("autores.html"));
         String morte;
@@ -130,19 +138,16 @@ public class trabalhopratico {
             String linha = ler.nextLine();
             Matcher m = p.matcher(linha);
             if (m.find()) {
-                while (ler.hasNextLine()) {
-                    linha = ler.nextLine();
-                    Matcher m2 = p2.matcher(linha);
-                    if(m2.find()){
-                        morte = m2.group(3) + "de" + m2.group(6);
-                        ler.close();
-                        return morte;
-                    }
+                linha = ler.nextLine();
+                m2 = p2.matcher(linha);
+                if (m2.find()) {
+                    morte = m.group(1);
+                    return morte;
                 }
             }
         }
         ler.close();
-        return null;
+        return "nao existe";
     }
 
     public static Document criaElemento(Autor aux, Document doc) {
@@ -179,7 +184,7 @@ public class trabalhopratico {
         Scanner ler = new Scanner(System.in);  //PARA LER DA CONSOLA
         String linha;
         linha = ler.nextLine();
-        String aux = procura_DataMorte(linha);
+        String aux = procura_Nacionalidade(linha);
         System.out.println(aux);
 
         /*
