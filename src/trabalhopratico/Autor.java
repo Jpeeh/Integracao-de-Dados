@@ -28,6 +28,10 @@ public class Autor {
         return generos;
     }
 
+    public int getSequencia() {
+        return sequencia;
+    }
+
     public StringBuilder getData_nasc() {
         return data_nasc;
     }

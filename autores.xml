@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<autores>
+     <autor id="1">
+          <nome>Paul Auster</nome>
+          <data_nascimento>03 de fevereiro de 1947</data_nascimento>
+          <generos>Romance , conto</generos>
+     </autor>
+     <autor id="1">
+          <nome>Paul Auster</nome>
+          <data_nascimento>03 de fevereiro de 1947</data_nascimento>
+          <generos>Romance , conto</generos>
+     </autor>
+</autores>
