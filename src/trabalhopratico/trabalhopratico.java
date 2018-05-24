@@ -31,7 +31,6 @@ public class trabalhopratico {
         Matcher m;
         String linha;
 
-        //StringBuilder generos = new StringBuilder();  //para agregar todos os géneros (podem existir vários) 
         while (ler.hasNextLine()) {
             linha = ler.nextLine();
             m = p1.matcher(linha);
@@ -92,12 +91,20 @@ public class trabalhopratico {
     public static String procura_Nacionalidade(String nome) throws FileNotFoundException, IOException {
         //EXPRESÕES REGULARES PARA O TÓPICO NACIONALIDADE, FALTA IMPLEMENTAR PARA A NACIONALIDADE QUE ESTÁ NO NASCIMENTO
         String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Nacionalidade</td>";
-        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><a href=\"/wiki/Irlandeses\" title=\"Irlandeses\">([^<]+)</a></td>";
+        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a></td>";
+        
+        String er2 = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Nascimento</td>";
+        String er3 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><span style=\"white-space:nowrap;\"><a href=\"/wiki/[^#]+#Nascimentos\" class=\"mw-redirect\" title=\"[^\"]*\">([^<]+)</a> de <a href=\"/wiki/[^\"]*\" class=\"[^\"]*\" title=\"[^\"]*\">([^<]+)</a>, <img alt=\"[^\"]*\" src=\"[^\"]*\" width=\"[^\"]*\" height=\"[^\"]*\" class=\"[^\"]*\" srcset=\"[^\"]*\" data-file-width=\"[^\"]*\" data-file-height=\"[^\"]*\" />([^<]+)<a href=\"/wiki/[^\"]+\" title=\"[^\"]+\">([^<]+)</a></td>";
+        
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
 
         Pattern p = Pattern.compile(er);
         Pattern p1 = Pattern.compile(er1);
+        
+        Pattern p2 = Pattern.compile(er2);
+        Pattern p3 = Pattern.compile(er3);
+        
         Scanner ler;
         ler = new Scanner(new FileInputStream("autores.html"));
         String nacionalidade;
@@ -106,6 +113,7 @@ public class trabalhopratico {
         while (ler.hasNextLine()) {
             linha = ler.nextLine();
             Matcher m = p.matcher(linha);
+            Matcher m1 = p.matcher(linha);
             if (m.find()) {
                 linha = ler.nextLine();
                 Matcher m2 = p1.matcher(linha);
@@ -115,6 +123,15 @@ public class trabalhopratico {
                     return nacionalidade;
                 }
             }
+             if(m1.find()){
+                    linha = ler.nextLine();
+                    Matcher m3 = p3.matcher(linha);
+                    if(m3.find()) {
+                        ler.close();
+                        nacionalidade = m3.group(1);
+                        return nacionalidade;
+                    }
+                }
         }
         ler.close();
         return null;

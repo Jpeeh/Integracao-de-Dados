@@ -9,22 +9,39 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- *   
+ *
  */
-
 public class HttpRequestFunctions {
+
+    public static String capitalize(String input) {   //FUNÇÃO PARA CAPITALIZAR AS LETRAS INICIAIS DE CADA PALAVRA
+        StringTokenizer tokenizer = new StringTokenizer(input);
+        StringBuilder builder = new StringBuilder();
+
+        while (tokenizer.hasMoreTokens()) {
+            String word = tokenizer.nextToken();
+            word = word.substring(0, 1).toUpperCase() + word.substring(1);
+            builder.append(word);
+            builder.append(" ");
+        }
+
+        String capitalized = builder.toString();
+        return capitalized.trim();
+    }
+
     public static void httpRequest1(String link, String pesquisa, String outFile) throws IOException {
         URL url;
         try {
             if (!pesquisa.isEmpty()) {
                 //Criar URL com palavra de pesquisa
-                System.out.println(link + URLEncoder.encode(pesquisa.toLowerCase(), "UTF-8").replace("+", "_"));
-                url = new URL(link + URLEncoder.encode(pesquisa.toLowerCase(), "UTF-8").replace("+", "_")); //alterar replace se necessário
+                String capitalized = capitalize(pesquisa.toLowerCase());
+                System.out.println(link + URLEncoder.encode(capitalized, "UTF-8").replace("+", "_"));
+                url = new URL(link + URLEncoder.encode(capitalized, "UTF-8").replace("+", "_")); //alterar replace se necessário
             } else {
                 //Criar URL simples, sem palavra de pesquisa
                 System.out.println(link);
@@ -48,7 +65,7 @@ public class HttpRequestFunctions {
             out.write(sb.toString());
             out.close();
             in.close();
-            
+
         } catch (MalformedURLException ex) {
             System.out.println("Erro no URL / ligação");
             Logger.getLogger(HttpRequestFunctions.class.getName()).log(Level.SEVERE, null, ex);
