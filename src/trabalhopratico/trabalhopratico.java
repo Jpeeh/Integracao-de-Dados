@@ -10,10 +10,6 @@ import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
-//PROCURA_NOME FEITO!
-//PROCURA_DATANASC FEITO!
-//PROCURA_GENERO FEITO!
-//PROCURA_NACIONALIDADE FEITO! (PRECISA DE SER CORRIGIDO)
 public class trabalhopratico {
 
     public static String procuraNome(String nome) throws FileNotFoundException, IOException {
@@ -65,8 +61,9 @@ public class trabalhopratico {
         return data;
     }
 
-    public static StringBuilder procuraGeneros(String nome) throws FileNotFoundException, IOException {
-        String er = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><a href=\"/wiki/([^<]+)\" title=\"([^>]+)\">([^<]+)</a>, <a href=\"/wiki/([^<]+)\" title=\"([^>]+)\">([^<]+)</a></td>";
+    public static String procuraGeneros(String nome) throws FileNotFoundException, IOException { //SÓ FAZ 1 GÉNERO
+        String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a></td>";
+        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">(Romance histórico|Drama|Conto|Romance|Crônica|Fábula|Suspense|Thriller psicológico|Romance policial|Diálogo|Literatura gótica|Erotismo|Fantasia|Terror|Literatura gótica)</a>";
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
 
@@ -74,37 +71,37 @@ public class trabalhopratico {
         ler = new Scanner(new FileInputStream("autores.html"));
 
         Pattern p = Pattern.compile(er);
-        StringBuilder generos = new StringBuilder();  //ano de nascimento 
+        Pattern p1 = Pattern.compile(er1);
+        String generos;
 
         String linha;
         while (ler.hasNextLine()) {
             linha = ler.nextLine();
             Matcher m = p.matcher(linha);
             if (m.find()) {
-                generos.append(m.group(3)).append(" , ").append(m.group(6));
+                linha = ler.nextLine();
+                Matcher m1 = p1.matcher(linha);
+                if (m1.find()) {
+                    ler.close();
+                    generos = m1.group(1);
+                    return generos;
+                }
             }
         }
         ler.close();
-        return generos;
+        return null;
     }
 
-    public static String procura_Nacionalidade(String nome) throws FileNotFoundException, IOException {
-        //EXPRESÕES REGULARES PARA O TÓPICO NACIONALIDADE, FALTA IMPLEMENTAR PARA A NACIONALIDADE QUE ESTÁ NO NASCIMENTO
+    public static String procura_Nacionalidade(String nome) throws FileNotFoundException, IOException {  //FEITO!!
         String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Nacionalidade</td>";
         String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a></td>";
-        
-        String er2 = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Nascimento</td>";
-        String er3 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><span style=\"white-space:nowrap;\"><a href=\"/wiki/[^#]+#Nascimentos\" class=\"mw-redirect\" title=\"[^\"]*\">([^<]+)</a> de <a href=\"/wiki/[^\"]*\" class=\"[^\"]*\" title=\"[^\"]*\">([^<]+)</a>, <img alt=\"[^\"]*\" src=\"[^\"]*\" width=\"[^\"]*\" height=\"[^\"]*\" class=\"[^\"]*\" srcset=\"[^\"]*\" data-file-width=\"[^\"]*\" data-file-height=\"[^\"]*\" />([^<]+)<a href=\"/wiki/[^\"]+\" title=\"[^\"]+\">([^<]+)</a></td>";
-        
+
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
 
         Pattern p = Pattern.compile(er);
         Pattern p1 = Pattern.compile(er1);
-        
-        Pattern p2 = Pattern.compile(er2);
-        Pattern p3 = Pattern.compile(er3);
-        
+
         Scanner ler;
         ler = new Scanner(new FileInputStream("autores.html"));
         String nacionalidade;
@@ -113,40 +110,31 @@ public class trabalhopratico {
         while (ler.hasNextLine()) {
             linha = ler.nextLine();
             Matcher m = p.matcher(linha);
-            Matcher m1 = p.matcher(linha);
             if (m.find()) {
-                linha = ler.nextLine();
-                Matcher m2 = p1.matcher(linha);
-                if (m2.find()) {
-                    ler.close();
-                    nacionalidade = m2.group(1);
-                    return nacionalidade;
-                }
-            }
-             if(m1.find()){
+                while (ler.hasNextLine()) {
                     linha = ler.nextLine();
-                    Matcher m3 = p3.matcher(linha);
-                    if(m3.find()) {
+                    Matcher m2 = p1.matcher(linha);
+                    if (m2.find()) {
                         ler.close();
-                        nacionalidade = m3.group(1);
+                        nacionalidade = m2.group(1);
+                        nacionalidade = HttpRequestFunctions.capitalize(nacionalidade); //mete a 1ª letra da palavra capitalizada
                         return nacionalidade;
                     }
                 }
+            }
         }
         ler.close();
         return null;
     }
 
-    public static String procura_DataMorte(String nome) throws IOException {
+    public static String procura_DataMorte(String nome) throws IOException { //FEITO!!
         String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Morte</td>";
-        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><span style=\"white-space:nowrap;\"><a href=\"/wiki/30_de_novembro\" title=\"30 de novembro\">([^<]+)</a> de <a href=\"/wiki/1900\" title=\"1900\">1900</a>&#160;(46&#160;anos)</span><br /><a href=\"/wiki/Paris\" title=\"Paris\">Paris</a>, <a href=\"/wiki/Fran%C3%A7a\" title=\"França\"><img alt=\"França\" src=\"//upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/22px-Flag_of_France.svg.png\" width=\"22\" height=\"15\" class=\"thumbborder\" srcset=\"//upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/33px-Flag_of_France.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/44px-Flag_of_France.svg.png 2x\" data-file-width=\"900\" data-file-height=\"600\" /></a> <a href=\"/wiki/Terceira_Rep%C3%BAblica_Francesa\" title=\"Terceira República Francesa\">França</a></td>";
-
+        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><span style=\"white-space:nowrap;\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a> de <a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a>";
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
 
         Pattern p = Pattern.compile(er);
         Pattern p2 = Pattern.compile(er1);
-        Matcher m2;
         Scanner ler;
         ler = new Scanner(new FileInputStream("autores.html"));
         String morte;
@@ -155,20 +143,85 @@ public class trabalhopratico {
             String linha = ler.nextLine();
             Matcher m = p.matcher(linha);
             if (m.find()) {
-                linha = ler.nextLine();
-                m2 = p2.matcher(linha);
-                if (m2.find()) {
-                    morte = m.group(1);
-                    return morte;
+                while (ler.hasNextLine()) {
+                    linha = ler.nextLine();
+                    Matcher m2 = p2.matcher(linha);
+                    if (m2.find()) {
+                        morte = m2.group(1) + " de " + m2.group(2);
+                        ler.close();
+                        return morte;
+                    } else {
+                        ler.close();
+                        return "ainda em actividade";
+                    }
                 }
             }
         }
         ler.close();
-        return "nao existe";
+        return null;
     }
 
-    public static Document criaElemento(Autor aux, Document doc) {
+    public static String procuraPremios(String nome) throws IOException {  //SÓ ENCONTRA O 1º PRÉMIO DE CADA AUTOR
+        //ER1 PARA VER SE O AUTOR TEM PRÉMIOS OU NÃO 
+        String er1 = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Pr[êé]mios</td>";
+
+        String er2 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a> ([^<]+)<br />";
+        String link = "https://pt.wikipedia.org/wiki/";
+        HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
+
+        Pattern p = Pattern.compile(er1);
+        Pattern p1 = Pattern.compile(er2);
+
+        Scanner ler;
+        ler = new Scanner(new FileInputStream("autores.html"));
+        String linha;
+        String premios;
+
+        while (ler.hasNextLine()) {
+            linha = ler.nextLine();
+            Matcher m = p.matcher(linha);
+            if (m.find()) {  //SE ENCONTRAR PRÉMIOS
+                linha = ler.nextLine();
+                Matcher m1 = p1.matcher(linha);
+                if (m1.find()) {
+                    ler.close();
+                    premios = m1.group(1);
+                    return premios;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static String procuralink_foto(String nome) throws IOException {
+        String link = "https://pt.wikipedia.org/wiki/";
+        String er = "<div class=\"floatnone\"><a href=\"/wiki/[^\"]*\" class=\"image\" title=\"[^\"]*\"><img alt=\"[^\"]*\" src=\"([^\"]*)\" width=\"[^\"]*\" height=\"[^\"]*\" srcset=\"[^\"]*\" data-file-width=\"[^\"]*\" data-file-height=\"[^\"]*\" /></a></div>";
+        HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
+
+        Scanner ler;
+        ler = new Scanner(new FileInputStream("autores.html"));
+
+        Pattern p = Pattern.compile(er);
+        String res;
+        String linha;
+
+        while (ler.hasNextLine()) {
+            linha = ler.nextLine();
+            Matcher m = p.matcher(linha);
+            if (m.find()) {
+                ler.close();
+                res = m.group(1);
+                return res;
+            }
+        }
+        ler.close();
+        return null;
+    }
+
+    public static Document adicionaAutor(Autor aux) {
         Element raiz;
+        Document doc = XMLJDomFunctions.lerDocumentoXML("autores.xml");
+
         if (doc == null) {
             raiz = new Element("autores"); //cria <catalogo>...</catalogo>
             doc = new Document(raiz);
@@ -201,7 +254,7 @@ public class trabalhopratico {
         Scanner ler = new Scanner(System.in);  //PARA LER DA CONSOLA
         String linha;
         linha = ler.nextLine();
-        String aux = procura_Nacionalidade(linha);
+        String aux = procuralink_foto(linha);
         System.out.println(aux);
 
         /*
