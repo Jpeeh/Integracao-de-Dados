@@ -1,6 +1,7 @@
 # Integracao-de-Dados
 Regex Java Project
-O QUE JÁ ESTÁ FEITO:
+
+-> O QUE JÁ ESTÁ FEITO:
  - [x] Procurar Nome;
  - [x] Procurar a Data de Nascimento;
  - [x] Procurar a Data de Falecimento;
