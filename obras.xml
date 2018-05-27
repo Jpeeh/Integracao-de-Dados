@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Obras>
+     <Livro>
+          <Codigo_Autor>19398</Codigo_Autor>
+          <Autor>Oscar Wilde</Autor>
+          <Titulo>O Retrato de Dorian Gray</Titulo>
+          <ISBN>9789722520812</ISBN>
+          <Ano>2010</Ano>
+          <Preco>8,00€</Preco>
+          <Editor>11 X 17</Editor>
+     </Livro>
+</Obras>

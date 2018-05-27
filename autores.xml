@@ -13,4 +13,12 @@
           <Generos />
           <Link_Foto>//upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Oscar_Wilde_Sarony.jpg/200px-Oscar_Wilde_Sarony.jpg</Link_Foto>
      </Autor>
+     <Autor id="0">
+          <Nome>Pablo Neruda</Nome>
+          <Data_Nascimento />
+          <Data_Falecimento>23 de setembro de 1973</Data_Falecimento>
+          <Nacionalidade />
+          <Generos />
+          <Link_Foto>//upload.wikimedia.org/wikipedia/commons/thumb/0/04/Pablo_Neruda.jpg/200px-Pablo_Neruda.jpg</Link_Foto>
+     </Autor>
 </autores>

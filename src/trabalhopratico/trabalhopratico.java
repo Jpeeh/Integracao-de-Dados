@@ -1,8 +1,11 @@
 package trabalhopratico;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,7 +46,7 @@ public class trabalhopratico {
         String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Nascimento</td>";
         String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\">(<span style=\"white-space:nowrap;\">)?<a href=\"/wiki/[^#]*#Nascimentos\" (class=\"[^\"]*\")? title=\"[^\"]*\">([^<]+)</a> de <a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a>[^<]+</span><br />";
         //STRING ER1 PRECISA DE SER CORRIGIDA, SÓ ESTÁ A DAR VALORES CORRCETOS PARA O AUTOR 'PABLO AUSTER' !!
-        
+
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
 
@@ -63,14 +66,13 @@ public class trabalhopratico {
                     Matcher m2 = p1.matcher(linha);
                     if (m2.find()) {
                         ler.close();
-                        if (m2.group(1) == null){//se não existir a tag 'span' na expressão regular er1, (não está a assumir!!)
+                        if (m2.group(1) == null) {//se não existir a tag 'span' na expressão regular er1, (não está a assumir!!)
                             data = m2.group(2) + " de " + m2.group(3);
                             return data;
-                        } else if(m2.group(2) == null) {
+                        } else if (m2.group(2) == null) {
                             data = m2.group(3) + " de " + m2.group(4);//se não existir o atributo 'class' na expressão regular er1
                             return data;
-                        }
-                        else{
+                        } else {
                             data = m2.group(3) + " de " + m2.group(4);
                             return data;
                         }
@@ -287,9 +289,184 @@ public class trabalhopratico {
         prem = procuraPremios(linha);
         //local_nasc = procura_localNasc(linha);
         link_foto = procuralink_foto(linha);
+
         Autor aux = new Autor(enome, d_nasc, d_morte, nac, gen, prem, link_foto);
+
         System.out.println(aux.getNome() + aux.getData_nasc() + aux.getData_morte() + aux.getNacionalidade() + aux.getGeneros());
         adicionaAutor(aux);
+    }
+
+    public static String procuraLinkWook(String nome) throws IOException {
+        String er = "<a class=\"title-lnk\" href=\"([^\"]+)\"#productPageSectionComments>|<a href=\"(/livro/[^\"]+)\">";
+        String link = "https://www.wook.pt/pesquisa/";
+        if (Objects.equals(nome, "Roberto Bolaño")) {
+            nome = "Roberto Bolano";
+        }
+
+        if (Objects.equals(nome, "Paul Auster") || Objects.equals(nome, "Oscar wilde")) {
+            HttpRequestFunctions2.httpRequest1(link, nome, "obras.html");
+        } else {
+            HttpRequestFunctions2.httpRequest1(link, nome, "obras.html");
+        }
+
+        Scanner ler = new Scanner(new FileInputStream("obras.html"));
+        Pattern p1 = Pattern.compile(er);
+
+        while (ler.hasNextLine()) {
+            String linha = ler.nextLine();
+            Matcher m = p1.matcher(linha);
+            if (m.find()) {
+                ler.close();
+                if (m.group(2) != null) {
+                    return m.group(2);
+                } else {
+                    return m.group(1);
+                }
+            }
+        }
+        return null;
+    }
+
+    public static String procuraISBN(String nome) throws FileNotFoundException, IOException {
+        String link = "https://www.wook.pt" + nome;
+        String pesquisa = "";
+        String er = "<span id=\"productPageSectionDetails-collapseDetalhes-content-isbn\" class=\"col-xs-12\">ISBN: <span itemprop=\"isbn\" class=\"info\">([^<]+)</span></span>";
+        HttpRequestFunctions2.httpRequest1(link, pesquisa, "obras.html");
+        Scanner ler = new Scanner(new FileInputStream("obras.html"));
+        Pattern p = Pattern.compile(er);
+        while (ler.hasNextLine()) {
+            String linha = ler.nextLine();
+            Matcher m = p.matcher(linha);
+            if (m.find()) {
+                ler.close();
+                return m.group(1);
+            }
+        }
+        return null;
+    }
+
+    public static String procuraCod_Autor(String nome) throws IOException {  //RETORNA O VALOR NUMÉRICO QUE ESTÁ NO LINK DA PÁGINA DO AUTOR NO WOOK
+        String link = "https://www.wook.pt/pesquisa/";
+        String er = "de <a href=\"/autor/[^/]+/([^\"]+)\">[^<]+</a>(?:[^<])*</div>";
+
+        HttpRequestFunctions2.httpRequest1(link, nome, "obras.html");
+
+        Scanner ler = new Scanner(new FileInputStream("obras.html"));
+        Pattern p1 = Pattern.compile(er);
+
+        while (ler.hasNextLine()) {
+            String linha = ler.nextLine();
+            Matcher m = p1.matcher(linha);
+            if (m.find()) {
+                ler.close();
+                return m.group(1);
+            }
+        }
+        return null;
+    }
+
+    public static String procuraPreco(String res) throws IOException {
+        String link = "https://www.wook.pt" + res;
+        String pesquisa = "";
+        String er = "(?:\\s)*<div itemprop=\"price\" class=\"current\" id=\"productPageRightSectionTop-saleAction-price-current\">(?: )?([^<]+)<(?:span|meta) itemprop=\"priceCurrency\" content=\"EUR\">(?:€</span>)?</div>";
+        HttpRequestFunctions.httpRequest1(link, pesquisa, "obras.html");
+        Scanner ler = new Scanner(new FileInputStream("obras.html"));
+        Pattern p = Pattern.compile(er);
+        while (ler.hasNextLine()) {
+            String linha = ler.nextLine();
+            Matcher m = p.matcher(linha);
+            if (m.find()) {
+                ler.close();
+                return m.group(1);
+            }
+        }
+        return null;
+    }
+
+    public static String procuraAno(String res) throws IOException {
+        String link = "https://www.wook.pt" + res;
+        String pesquisa = ""; //assumindo que o nome = pesquisa
+        String er = "<span id=\"productPageSectionDetails-collapseDetalhes-content-year\" class=\"col-xs-12\">Edição ou reimpressão: <span itemprop=\"datePublished\" class=\"info\">[0-9\\s-]*([^<]{4})</span></span>";
+        HttpRequestFunctions2.httpRequest1(link, pesquisa, "obras.html");
+        Scanner ler = new Scanner(new FileInputStream("obras.html"));
+        Pattern p1 = Pattern.compile(er);
+        while (ler.hasNextLine()) {
+            String linha = ler.nextLine();
+            Matcher m = p1.matcher(linha);
+            if (m.find()) {
+                ler.close();
+                return m.group(1);
+            }
+        }
+        return null;
+    }
+
+    public static String procuraTitulo(String res) throws IOException {
+        String link = "https://www.wook.pt" + res;
+        String pesquisa = "";
+        String er = "<h1 itemprop=\"name\" id=\"productPageRightSectionTop-title-h1\">([^<]+)</h1>";
+        HttpRequestFunctions.httpRequest1(link, pesquisa, "obras.html");
+        Scanner ler = new Scanner(new FileInputStream("obras.html"));
+        Pattern p1 = Pattern.compile(er);
+        while (ler.hasNextLine()) {
+            String linha = ler.nextLine();
+            Matcher m = p1.matcher(linha);
+            if (m.find()) {
+                ler.close();
+                return m.group(1);
+            }
+        }
+        return null;
+    }
+
+    public static String procuraEditor(String res) throws IOException {
+        String link = "https://www.wook.pt" + res;
+        String pesquisa = "";
+        String er = "<span itemprop=\"[^\"]*\" itemscope itemtype=\"[^\"]*\" class=\"[^\"]*\">Editor: <span itemprop=\"[^\"]*\" class=\"[^\"]*\">([^<]+)</span></span>";
+        HttpRequestFunctions.httpRequest1(link, pesquisa, "obras.html");
+        Scanner ler = new Scanner(new FileInputStream("obras.html"));
+        Pattern p = Pattern.compile(er);
+        while (ler.hasNextLine()) {
+            String linha = ler.nextLine();
+            Matcher m = p.matcher(linha);
+            if (m.find()) {
+                ler.close();
+                return m.group(1);
+            }
+        }
+        return null;
+    }
+
+    public static void adicionaObra(Obra aux) {
+        Element raiz;
+        Document doc = XMLJDomFunctions.lerDocumentoXML("obras.xml");
+
+        if (doc == null) {
+            raiz = new Element("Obras"); //cria <catalogo>...</catalogo>
+            doc = new Document(raiz);
+        } else {
+            raiz = doc.getRootElement();
+        }
+
+        Element obra = new Element("Livro");
+
+        Element cod_autor = new Element("Codigo_Autor").addContent(aux.getCod());
+        Element autor = new Element("Autor").addContent(aux.getAutor());
+        Element titulo = new Element("Titulo").addContent(aux.getTitulo());
+        Element isbn = new Element("ISBN").addContent(aux.getIsbn());
+        Element ano = new Element("Ano").addContent(aux.getAno());
+        Element preco = new Element("Preco").addContent(aux.getPreco());
+        Element editor = new Element("Editor").addContent(aux.getEditor());
+        obra.addContent(cod_autor);
+        obra.addContent(autor);
+        obra.addContent(titulo);
+        obra.addContent(isbn);
+        obra.addContent(ano);
+        obra.addContent(preco);
+        obra.addContent(editor);
+        raiz.addContent(obra);
+        
+        XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "obras.xml");
     }
 
     public static void main(String[] args) throws IOException {
@@ -299,8 +476,29 @@ public class trabalhopratico {
         linha = ler.nextLine();
         //leituraWiki(linha);
 
-        String aux = procuraDataNasc(linha);
+        String res = procuraLinkWook(linha);  //devolve um link para um livro
+        System.out.println(res);
+        
+        String aux = procuraISBN(res);
         System.out.println(aux);
+        
+        String cod_autor = procuraCod_Autor(linha);
+        System.out.println(cod_autor);
+        
+        String preco = procuraPreco(res);
+        System.out.println(preco);
+        
+        String ano = procuraAno(res);
+        System.out.println(ano);
+        
+        String titulo = procuraTitulo(res);
+        System.out.println(titulo);
+        
+        String editor = procuraEditor(res);
+        System.out.println(editor);
+        
+        Obra aux1 = new Obra(cod_autor, linha, titulo, aux, ano, editor, preco);
+        adicionaObra(aux1);
     }
 
 }

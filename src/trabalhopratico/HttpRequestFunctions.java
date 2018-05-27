@@ -40,7 +40,7 @@ public class HttpRequestFunctions {
             if (!pesquisa.isEmpty()) {
                 //Criar URL com palavra de pesquisa
                 String capitalized = capitalize(pesquisa.toLowerCase());
-                //System.out.println(link + URLEncoder.encode(capitalized, "UTF-8").replace("+", "_"));
+                System.out.println(link + URLEncoder.encode(capitalized, "UTF-8").replace("+", "_"));
                 url = new URL(link + URLEncoder.encode(capitalized, "UTF-8").replace("+", "_")); //alterar replace se necessário
             } else {
                 //Criar URL simples, sem palavra de pesquisa
