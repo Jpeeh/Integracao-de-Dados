@@ -9,4 +9,5 @@ Regex Java Project
  - [x] Procurar Nacionalidade;
  - [x] Procurar Prémios (Só procura 1 prémio de cada Autor);
  - [x] Procurar Link da Fotografia do Autor;
- - [x] Adicionar Autor ao ficheiro autores.xml . 
+ - [x] Adicionar Autor ao ficheiro autores.xml;
+ - [x] Função para ler da Wikipédia e criar novo autor no .xml.
