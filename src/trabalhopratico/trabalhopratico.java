@@ -40,7 +40,10 @@ public class trabalhopratico {
     }
 
     public static String procuraDataNasc(String nome) throws IOException {
-        String er = "<a href=\"/wiki/([^>]+)\" class=\"mw-redirect\" title=\"([^>]+)\">([^<]+)</a> de <a href=\"/wiki/([^>]+)\" title=\"([^>]+)\">([^<]+)</a>";
+        String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Nascimento</td>";
+        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\">(<span style=\"white-space:nowrap;\">)?<a href=\"/wiki/[^#]*#Nascimentos\" (class=\"[^\"]*\")? title=\"[^\"]*\">([^<]+)</a> de <a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a>[^<]+</span><br />";
+        //STRING ER1 PRECISA DE SER CORRIGIDA, SÓ ESTÁ A DAR VALORES CORRCETOS PARA O AUTOR 'PABLO AUSTER' !!
+        
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
 
@@ -48,15 +51,31 @@ public class trabalhopratico {
         ler = new Scanner(new FileInputStream("autores.html"));  //PARA LER DO FICHEIRO HTML ONDE ESTÃO OS DADOS
 
         Pattern p = Pattern.compile(er);
-        String data; //ano de nascimento 
+        Pattern p1 = Pattern.compile(er1);
+        String data;
 
         while (ler.hasNextLine()) {
             String linha = ler.nextLine();
             Matcher m = p.matcher(linha);
             if (m.find()) {
-                ler.close();
-                data = m.group(3) + " de " + m.group(6);
-                return data;
+                while (ler.hasNextLine()) {
+                    linha = ler.nextLine();
+                    Matcher m2 = p1.matcher(linha);
+                    if (m2.find()) {
+                        ler.close();
+                        if (m2.group(1) == null){//se não existir a tag 'span' na expressão regular er1, (não está a assumir!!)
+                            data = m2.group(2) + " de " + m2.group(3);
+                            return data;
+                        } else if(m2.group(2) == null) {
+                            data = m2.group(3) + " de " + m2.group(4);//se não existir o atributo 'class' na expressão regular er1
+                            return data;
+                        }
+                        else{
+                            data = m2.group(3) + " de " + m2.group(4);
+                            return data;
+                        }
+                    }
+                }
             }
         }
         ler.close();
@@ -230,7 +249,7 @@ public class trabalhopratico {
         } else {
             raiz = doc.getRootElement();
         }
-        
+
         Element autor = new Element("Autor");
         String id = String.valueOf(aux.getSequencia());
         Attribute a = new Attribute("id", id);
@@ -241,16 +260,16 @@ public class trabalhopratico {
 
         Element data_n = new Element("Data_Nascimento").addContent(aux.getData_nasc());
         autor.addContent(data_n);
-        
+
         Element data_m = new Element("Data_Falecimento").addContent(aux.getData_morte());
         autor.addContent(data_m);
-        
+
         Element nacionalidade = new Element("Nacionalidade").addContent(aux.getNacionalidade());
         autor.addContent(nacionalidade);
-        
+
         Element generos = new Element("Generos").addContent(aux.getGeneros());
         autor.addContent(generos);
-        
+
         Element link_foto = new Element("Link_Foto").addContent(aux.getLink_foto());
         autor.addContent(link_foto);
 
@@ -278,7 +297,10 @@ public class trabalhopratico {
         Scanner ler = new Scanner(System.in);  //PARA LER DA CONSOLA
         String linha;
         linha = ler.nextLine();
-        leituraWiki(linha);
+        //leituraWiki(linha);
+
+        String aux = procuraDataNasc(linha);
+        System.out.println(aux);
     }
-    
+
 }
