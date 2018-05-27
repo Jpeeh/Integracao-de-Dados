@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <autores>
-     <autor id="1">
-          <nome>Paul Auster</nome>
-          <data_nascimento>03 de fevereiro de 1947</data_nascimento>
-          <generos>Romance , conto</generos>
+     <autor id="0">
+          <nome>Oscar Wilde</nome>
+          <data_nascimento>null</data_nascimento>
+          <generos>null</generos>
      </autor>
-     <autor id="1">
-          <nome>Paul Auster</nome>
-          <data_nascimento>03 de fevereiro de 1947</data_nascimento>
-          <generos>Romance , conto</generos>
-     </autor>
+     <Autor id="0">
+          <Nome>Oscar Wilde</Nome>
+          <Data_Nascimento />
+          <Data_Falecimento>30 de novembro de 1900</Data_Falecimento>
+          <Nacionalidade>Irlandês</Nacionalidade>
+          <Generos />
+          <Link_Foto>//upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Oscar_Wilde_Sarony.jpg/200px-Oscar_Wilde_Sarony.jpg</Link_Foto>
+     </Autor>
 </autores>

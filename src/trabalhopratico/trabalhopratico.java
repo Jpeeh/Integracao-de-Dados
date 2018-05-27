@@ -39,7 +39,7 @@ public class trabalhopratico {
         return null;
     }
 
-    public static StringBuilder procuraDataNasc(String nome) throws IOException {
+    public static String procuraDataNasc(String nome) throws IOException {
         String er = "<a href=\"/wiki/([^>]+)\" class=\"mw-redirect\" title=\"([^>]+)\">([^<]+)</a> de <a href=\"/wiki/([^>]+)\" title=\"([^>]+)\">([^<]+)</a>";
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
@@ -48,17 +48,19 @@ public class trabalhopratico {
         ler = new Scanner(new FileInputStream("autores.html"));  //PARA LER DO FICHEIRO HTML ONDE ESTÃO OS DADOS
 
         Pattern p = Pattern.compile(er);
-        StringBuilder data = new StringBuilder();  //ano de nascimento 
+        String data; //ano de nascimento 
 
         while (ler.hasNextLine()) {
             String linha = ler.nextLine();
             Matcher m = p.matcher(linha);
             if (m.find()) {
-                data.append(m.group(3)).append(" de ").append(m.group(6));
+                ler.close();
+                data = m.group(3) + " de " + m.group(6);
+                return data;
             }
         }
         ler.close();
-        return data;
+        return null;
     }
 
     public static String procuraGeneros(String nome) throws FileNotFoundException, IOException { //SÓ FAZ 1 GÉNERO
@@ -218,35 +220,57 @@ public class trabalhopratico {
         return null;
     }
 
-    public static Document adicionaAutor(Autor aux) {
+    public static void adicionaAutor(Autor aux) {
         Element raiz;
         Document doc = XMLJDomFunctions.lerDocumentoXML("autores.xml");
 
         if (doc == null) {
-            raiz = new Element("autores"); //cria <catalogo>...</catalogo>
+            raiz = new Element("Autores"); //cria <catalogo>...</catalogo>
             doc = new Document(raiz);
         } else {
             raiz = doc.getRootElement();
         }
-        Element autor = new Element("autor");
+        
+        Element autor = new Element("Autor");
         String id = String.valueOf(aux.getSequencia());
         Attribute a = new Attribute("id", id);
         autor.setAttribute(a);
 
-        Element nome = new Element("nome").addContent(aux.getNome());
+        Element nome = new Element("Nome").addContent(aux.getNome());
         autor.addContent(nome);
 
-        String data = String.valueOf(aux.getData_nasc());
-        Element data_nasc = new Element("data_nascimento").addContent(data);
-        autor.addContent(data_nasc);
-
-        String genero = String.valueOf(aux.getGeneros());
-        Element generos = new Element("generos").addContent(genero);
+        Element data_n = new Element("Data_Nascimento").addContent(aux.getData_nasc());
+        autor.addContent(data_n);
+        
+        Element data_m = new Element("Data_Falecimento").addContent(aux.getData_morte());
+        autor.addContent(data_m);
+        
+        Element nacionalidade = new Element("Nacionalidade").addContent(aux.getNacionalidade());
+        autor.addContent(nacionalidade);
+        
+        Element generos = new Element("Generos").addContent(aux.getGeneros());
         autor.addContent(generos);
+        
+        Element link_foto = new Element("Link_Foto").addContent(aux.getLink_foto());
+        autor.addContent(link_foto);
 
         raiz.addContent(autor);
+        XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "autores.xml");
+    }
 
-        return doc;
+    public static void leituraWiki(String linha) throws IOException {
+        String enome, d_nasc, d_morte, nac, gen, prem, local_nasc, link_foto;
+        enome = procuraNome(linha);
+        d_nasc = procuraDataNasc(linha);
+        d_morte = procura_DataMorte(linha);
+        nac = procura_Nacionalidade(linha);
+        gen = procuraGeneros(linha);
+        prem = procuraPremios(linha);
+        //local_nasc = procura_localNasc(linha);
+        link_foto = procuralink_foto(linha);
+        Autor aux = new Autor(enome, d_nasc, d_morte, nac, gen, prem, link_foto);
+        System.out.println(aux.getNome() + aux.getData_nasc() + aux.getData_morte() + aux.getNacionalidade() + aux.getGeneros());
+        adicionaAutor(aux);
     }
 
     public static void main(String[] args) throws IOException {
@@ -254,13 +278,7 @@ public class trabalhopratico {
         Scanner ler = new Scanner(System.in);  //PARA LER DA CONSOLA
         String linha;
         linha = ler.nextLine();
-        String aux = procuralink_foto(linha);
-        System.out.println(aux);
-
-        /*
-         System.out.println("Nome: " + aux.getNome() + " Data: " + aux.getData_nasc() + " Generos: " + aux.getGeneros());
-         Document doc = XMLJDomFunctions.lerDocumentoXML("autores.xml");
-         doc = criaElemento(aux, doc);
-         XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "autores.xml"); */
+        leituraWiki(linha);
     }
+    
 }

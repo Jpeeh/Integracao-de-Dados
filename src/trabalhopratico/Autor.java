@@ -6,14 +6,50 @@ package trabalhopratico;
  */
 public class Autor {
     private static int sequencia = 0;
-    String nome;
-    StringBuilder generos, data_nasc;
+    String nome, data_nasc, data_morte, nacionalidade, generos, premios, link_foto;
 
-     public Autor(String nome, StringBuilder data_nasc, StringBuilder generos) {
+     public Autor(String nome, String data_nasc, String data_morte, String nacionalidade, String generos, String premios, String link_foto) {
         this.nome = nome;
         this.data_nasc = data_nasc;
+        this.data_morte = data_morte;
+        this.nacionalidade = nacionalidade;
         this.generos = generos;
-        sequencia++;
+        this.premios = premios;
+        this.generos = generos;
+        this.link_foto = link_foto;
+        sequencia = sequencia++;
+    }
+
+    public String getData_morte() {
+        return data_morte;
+    }
+
+    public void setData_morte(String data_morte) {
+        this.data_morte = data_morte;
+    }
+
+    public String getNacionalidade() {
+        return nacionalidade;
+    }
+
+    public void setNacionalidade(String nacionalidade) {
+        this.nacionalidade = nacionalidade;
+    }
+
+    public String getPremios() {
+        return premios;
+    }
+
+    public void setPremios(String premios) {
+        this.premios = premios;
+    }
+
+    public String getLink_foto() {
+        return link_foto;
+    }
+
+    public void setLink_foto(String link_foto) {
+        this.link_foto = link_foto;
     }
      
     public String getNome() {
@@ -24,16 +60,20 @@ public class Autor {
         this.nome = nome;
     }
 
-    public StringBuilder getGeneros() {
+    public String getGeneros() {
         return generos;
     }
 
-    public int getSequencia() {
+    public static int getSequencia() {
         return sequencia;
     }
 
-    public StringBuilder getData_nasc() {
+    public String getData_nasc() {
         return data_nasc;
+    }
+    
+    public void setData_nasc(String data_nasc) {
+        this.data_nasc = data_nasc;
     }
 }
     
