@@ -1,0 +1,47 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT obras (livro)+>
+<!ATTLIST obras
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT livro (cod_autor,autor,titulo,isbn,ano,editor,preco,foto)>
+<!ATTLIST livro
+  xmlns CDATA #FIXED ''>
+  
+<!ELEMENT cod_autor (#PCDATA)>
+<!ATTLIST cod_autor
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT autor (#PCDATA)>
+<!ATTLIST autor
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT titulo (#PCDATA)>
+<!ATTLIST titulo
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT isbn (#PCDATA)>
+<!ATTLIST isbn
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT ano (#PCDATA)>
+<!ATTLIST ano
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT editor (#PCDATA)>
+<!ATTLIST editor
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT preco (#PCDATA)>
+<!ATTLIST preco
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT foto (#PCDATA)>
+<!ATTLIST foto
+  xmlns CDATA #FIXED ''>
+  
+<!ATTLIST obras
+ xmlns:xsi CDATA #IMPLIED>
+
+<!ATTLIST obras 
+ xsi:noNamespaceSchemaLocation CDATA #IMPLIED>

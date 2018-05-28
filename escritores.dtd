@@ -1,0 +1,53 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT escritores (escritor)+>
+<!ATTLIST escritores
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT escritor (nome,fotografia,local_nascimento,data_nascimento,
+                    data_morte,nacionalidade,genero,ocupacao,premio)>
+<!ATTLIST escritor
+  xmlns CDATA #FIXED ''
+  id CDATA #REQUIRED>
+
+<!ELEMENT nome (#PCDATA)>
+<!ATTLIST nome
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT fotografia (#PCDATA)>
+<!ATTLIST fotografia
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT local_nascimento (#PCDATA)>
+<!ATTLIST local_nascimento
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT data_nascimento (#PCDATA)>
+<!ATTLIST data_nascimento
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT data_morte (#PCDATA)>
+<!ATTLIST data_morte
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT nacionalidade (#PCDATA)>
+<!ATTLIST nacionalidade
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT genero (#PCDATA)>
+<!ATTLIST genero
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT ocupacao (#PCDATA)>
+<!ATTLIST ocupacao
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT premio (#PCDATA)>
+<!ATTLIST premio
+  xmlns CDATA #FIXED ''>
+  
+<!ATTLIST escritores
+ xmlns:xsi CDATA #IMPLIED>
+
+<!ATTLIST escritores 
+ xsi:noNamespaceSchemaLocation CDATA #IMPLIED>
