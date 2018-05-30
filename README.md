@@ -13,3 +13,4 @@ Regex Java Project
  - [x] Função para ler da Wikipédia e criar novo autor no .xml.
  - [x] Adicionada todas as funções relacionadas com as Obras dos Autores; (excepto da foto da capa do livro!);
  - [x] Função para criar novo Livro no ficheiro Obras.xml .
+ - [x] Frame Criado
