@@ -5,7 +5,7 @@ package trabalhopratico;
  * @author Joao & Miguel
  */
 public class Autor {
-    private static int sequencia = 0;
+    int sequencia = 0;
     String nome, data_nasc, data_morte, nacionalidade, generos, premios, link_foto;
 
      public Autor(String nome, String data_nasc, String data_morte, String nacionalidade, String generos, String premios, String link_foto) {
@@ -17,7 +17,7 @@ public class Autor {
         this.premios = premios;
         this.generos = generos;
         this.link_foto = link_foto;
-        sequencia = sequencia++;
+        sequencia = sequencia + 1;
     }
 
     public String getData_morte() {
@@ -64,7 +64,7 @@ public class Autor {
         return generos;
     }
 
-    public static int getSequencia() {
+    public int getSequencia() {
         return sequencia;
     }
 

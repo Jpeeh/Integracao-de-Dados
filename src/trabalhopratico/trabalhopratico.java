@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -43,10 +44,9 @@ public class trabalhopratico {
         return null;
     }
 
-    public static String procuraDataNasc(String nome) throws IOException {
+    public static String procuraDataNasc(String nome) throws IOException { //FUNCIONA SÓ PARA "OSCAR WILDE"
         String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Nascimento</td>";
-        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\">(<span style=\"white-space:nowrap;\">)?<a href=\"/wiki/[^#]*#Nascimentos\" (class=\"[^\"]*\")? title=\"[^\"]*\">([^<]+)</a> de <a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a>[^<]+</span><br />";
-        //STRING ER1 PRECISA DE SER CORRIGIDA, SÓ ESTÁ A DAR VALORES CORRCETOS PARA O AUTOR 'PABLO AUSTER' !!
+        String er1 = "[<span style=\"white-space:nowrap;\">]?<a href=\"/wiki/[^\"]+#Nascimentos\" title=\"[^\"]+\">([^<]+)</a> de <a href=\"/wiki/[^\"]+\" title=\"[^\"]+\">([^<]+)</a>[[^<]+</span>]?<br />";        //STRING ER1 PRECISA DE SER CORRIGIDA, SÓ ESTÁ A DAR VALORES CORRCETOS PARA O AUTOR 'PABLO AUSTER' !!
 
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
@@ -67,16 +67,8 @@ public class trabalhopratico {
                     Matcher m2 = p1.matcher(linha);
                     if (m2.find()) {
                         ler.close();
-                        if (m2.group(1) == null) {//se não existir a tag 'span' na expressão regular er1, (não está a assumir!!)
-                            data = m2.group(2) + " de " + m2.group(3);
-                            return data;
-                        } else if (m2.group(2) == null) {
-                            data = m2.group(3) + " de " + m2.group(4);//se não existir o atributo 'class' na expressão regular er1
-                            return data;
-                        } else {
-                            data = m2.group(3) + " de " + m2.group(4);
-                            return data;
-                        }
+                        data = m2.group(1) + " de " + m2.group(2);
+                        return data;
                     }
                 }
             }
@@ -86,7 +78,7 @@ public class trabalhopratico {
     }
 
     public static String procuraGeneros(String nome) throws FileNotFoundException, IOException { //SÓ FAZ 1 GÉNERO
-        String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a></td>";
+        String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">Género literário</a></td>";
         String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">(Romance histórico|Drama|Conto|Romance|Crônica|Fábula|Suspense|Thriller psicológico|Romance policial|Diálogo|Literatura gótica|Erotismo|Fantasia|Terror|Literatura gótica)</a>";
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
@@ -116,9 +108,9 @@ public class trabalhopratico {
         return null;
     }
 
-    public static String procura_Nacionalidade(String nome) throws FileNotFoundException, IOException {  //FEITO!!
+    public static String procura_Nacionalidade(String nome) throws FileNotFoundException, IOException {  //NÃO DÁ PARA "PAUL AUSTER"
         String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Nacionalidade</td>";
-        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><a href=\"/wiki/[^\"]*\" title=\"[^\"]*\">([^<]+)</a></td>";
+        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\"><a href=\"/wiki/[^\"]*\" title=\"([^\"]+)\">";
 
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
@@ -147,6 +139,7 @@ public class trabalhopratico {
                 }
             }
         }
+
         ler.close();
         return null;
     }
@@ -293,7 +286,7 @@ public class trabalhopratico {
 
         Autor aux = new Autor(enome, d_nasc, d_morte, nac, gen, prem, link_foto);
 
-        System.out.println(aux.getNome() + aux.getData_nasc() + aux.getData_morte() + aux.getNacionalidade() + aux.getGeneros());
+        System.out.println(aux.getNome() + "\t" + aux.getData_nasc() + "\t" + aux.getData_morte() + "\t" + aux.getNacionalidade() + "\t" + aux.getGeneros() + "\t" + aux.getLink_foto());
         adicionaAutor(aux);
     }
 
@@ -317,38 +310,6 @@ public class trabalhopratico {
         }
     }
 
-    /*public static String procuraLinkWook(String nome) throws IOException {
-     HttpRequestFunctions2.capitalize(nome); //Normalizar o nome introduzido pelo utilizador!
-        
-     String er = "<a class=\"title-lnk\" href=\"([^\"]+)\"#productPageSectionComments>|<a href=\"(/livro/[^\"]+)\">";
-     String link = "https://www.wook.pt/pesquisa/";
-     if (Objects.equals(nome, "Roberto Bolaño")) {
-     nome = "Roberto Bolano";
-     }
-
-     if (Objects.equals(nome, "Paul Auster") || Objects.equals(nome, "Oscar wilde")) {
-     HttpRequestFunctions2.httpRequest1(link, nome, "obras.html");
-     } else {
-     HttpRequestFunctions2.httpRequest1(link, nome, "obras.html");
-     }
-
-     Scanner ler = new Scanner(new FileInputStream("obras.html"));
-     Pattern p1 = Pattern.compile(er);
-
-     while (ler.hasNextLine()) {
-     String linha = ler.nextLine();
-     Matcher m = p1.matcher(linha);
-     if (m.find()) {
-     ler.close();
-     if (m.group(2) != null) {
-     return m.group(2);
-     } else {
-     return m.group(1);
-     }
-     }
-     }
-     return null;
-     }*/
     public static ArrayList<String> procuraLinkWook(String nome) throws FileNotFoundException, IOException {
         String link = "https://www.wook.pt/pesquisa/";
         ArrayList<String> res = new ArrayList();
@@ -563,14 +524,67 @@ public class trabalhopratico {
         //FALTA VALIDAÇÃO XSD!
     }
 
+    public static String removeAutor(String procura) { //REMOVE AUTOR DE AUTORES.XML E AS SUAS OBRAS EM OBRAS.XML
+        Element raiz;
+        String res = null;
+        Document doc = XMLJDomFunctions.lerDocumentoXML("autores.xml");
+
+        if (doc == null) {
+            res = "O ficheiro não existe";
+            return res;
+        } else {
+            raiz = doc.getRootElement();
+        }
+
+        List todosAutores = raiz.getChildren("Autor");
+        boolean found = false;
+
+        for (int i = 0; i < todosAutores.size(); i++) {
+            Element autor = (Element) todosAutores.get(i);
+            if (autor.getChild("Nome").getText().contains(procura)) {
+                autor.getParent().removeContent(autor);
+                res = "Escritor removido com sucesso!";
+                found = true;
+            }
+        }
+
+        if (!found) {
+            res = "Nenhum escritor chamado " + procura + " foi encontrado";
+        } else {
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "autores.xml");
+            doc = XMLJDomFunctions.lerDocumentoXML("obras.xml");
+            if (doc == null) {
+                res = "O ficheiro não existe";
+                return res;
+            } else {
+                raiz = doc.getRootElement();
+            }
+
+            List todosObras = raiz.getChildren("Livro");
+            found = false;
+            for (int i = 0; i < todosObras.size(); i++) {
+                Element livro = (Element) todosObras.get(i);
+                if (livro.getChild("Autor").getText().contains(procura)) {
+                    livro.getParent().removeContent(livro);
+                    res = res + "\nLivro do escritor " + procura + " removido com sucesso!";
+                    found = true;
+                }
+            }
+            if (!found) {
+                res = "Nenhum escritor chamado " + procura + " foi encontrado";
+            }
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "obras.xml");
+        }
+        return res;
+    }
+
     public static void main(String[] args) throws IOException {
         System.out.println("Autor a pesquisar: ");
         Scanner ler = new Scanner(System.in);  //PARA LER DA CONSOLA
         String linha;
         linha = ler.nextLine();
-        //leituraWiki(linha);
-        
-        leituraWook(linha);  //testar com o escritor "oscar wilde", por exemplo
+        //leituraWiki(linha); 
 
+        //leituraWook(linha);  //testar com o escritor "oscar wilde", por exemplo
     }
 }
