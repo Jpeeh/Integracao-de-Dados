@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -297,34 +298,63 @@ public class trabalhopratico {
     }
 
     public static void leituraWook(String linha) throws IOException {
-        String link, pesquisa, enome, isbnw, autorw, editorw, precow, cod_autorw, titulow, anow;
+        String pesquisa, enome, isbnw, autorw, editorw, precow, cod_autorw, titulow, anow;
+        ArrayList<String> link = new ArrayList();
 
         link = procuraLinkWook(linha);
-        autorw = linha;
-        cod_autorw = procuraCod_Autor(linha);
-        isbnw = procuraISBN(link);
-        editorw = procuraEditor(link);
-        precow = procuraPreco(link);
-        titulow = procuraTitulo(link);
-        anow = procuraAno(link);
+        for (int i = 0; i < link.size(); i++) {
+            autorw = linha;
+            cod_autorw = procuraCod_Autor(linha);
+            isbnw = procuraISBN(link.get(i));
+            editorw = procuraEditor(link.get(i));
+            precow = procuraPreco(link.get(i));
+            titulow = procuraTitulo(link.get(i));
+            anow = procuraAno(link.get(i));
 
-        Obra aux = new Obra(autorw, cod_autorw, titulow, isbnw, anow, editorw, precow);
-        System.out.println(aux.getAutor() + aux.getCod() + aux.getTitulo() + aux.getIsbn() + aux.getAno() + aux.getEditor() + aux.getPreco());
-        adicionaObra(aux);
+            Obra aux = new Obra(autorw, cod_autorw, titulow, isbnw, anow, editorw, precow);
+            System.out.println(aux.getAutor() + aux.getCod() + aux.getTitulo() + aux.getIsbn() + aux.getAno() + aux.getEditor() + aux.getPreco());
+            adicionaObra(aux);
+        }
     }
 
-    public static String procuraLinkWook(String nome) throws IOException {
-        String er = "<a class=\"title-lnk\" href=\"([^\"]+)\"#productPageSectionComments>|<a href=\"(/livro/[^\"]+)\">";
-        String link = "https://www.wook.pt/pesquisa/";
-        if (Objects.equals(nome, "Roberto Bolaño")) {
-            nome = "Roberto Bolano";
-        }
+    /*public static String procuraLinkWook(String nome) throws IOException {
+     HttpRequestFunctions2.capitalize(nome); //Normalizar o nome introduzido pelo utilizador!
+        
+     String er = "<a class=\"title-lnk\" href=\"([^\"]+)\"#productPageSectionComments>|<a href=\"(/livro/[^\"]+)\">";
+     String link = "https://www.wook.pt/pesquisa/";
+     if (Objects.equals(nome, "Roberto Bolaño")) {
+     nome = "Roberto Bolano";
+     }
 
-        if (Objects.equals(nome, "Paul Auster") || Objects.equals(nome, "Oscar wilde")) {
-            HttpRequestFunctions2.httpRequest1(link, nome, "obras.html");
-        } else {
-            HttpRequestFunctions2.httpRequest1(link, nome, "obras.html");
-        }
+     if (Objects.equals(nome, "Paul Auster") || Objects.equals(nome, "Oscar wilde")) {
+     HttpRequestFunctions2.httpRequest1(link, nome, "obras.html");
+     } else {
+     HttpRequestFunctions2.httpRequest1(link, nome, "obras.html");
+     }
+
+     Scanner ler = new Scanner(new FileInputStream("obras.html"));
+     Pattern p1 = Pattern.compile(er);
+
+     while (ler.hasNextLine()) {
+     String linha = ler.nextLine();
+     Matcher m = p1.matcher(linha);
+     if (m.find()) {
+     ler.close();
+     if (m.group(2) != null) {
+     return m.group(2);
+     } else {
+     return m.group(1);
+     }
+     }
+     }
+     return null;
+     }*/
+    public static ArrayList<String> procuraLinkWook(String nome) throws FileNotFoundException, IOException {
+        String link = "https://www.wook.pt/pesquisa/";
+        ArrayList<String> res = new ArrayList();
+
+        String er = "<a class=\"title-lnk\" href=\"([^\"]+)\"#productPageSectionComments>";
+        HttpRequestFunctions2.httpRequest1(link, nome, "obras.html");
 
         Scanner ler = new Scanner(new FileInputStream("obras.html"));
         Pattern p1 = Pattern.compile(er);
@@ -333,15 +363,12 @@ public class trabalhopratico {
             String linha = ler.nextLine();
             Matcher m = p1.matcher(linha);
             if (m.find()) {
-                ler.close();
-                if (m.group(2) != null) {
-                    return m.group(2);
-                } else {
-                    return m.group(1);
-                }
+                res.add(m.group(1));
             }
         }
-        return null;
+
+        ler.close();
+        return res;
     }
 
     public static String procuraISBN(String nome) throws FileNotFoundException, IOException {
@@ -490,7 +517,7 @@ public class trabalhopratico {
         XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "obras.xml");
     }
 
-    public static void validaDocumentoAutores(String xmlFile) {
+    public static void validaDocumentoAutores(String xmlFile) throws IOException {
         Document doc = XMLJDomFunctions.lerDocumentoXML(xmlFile);
         File f = new File("autores.dtd");
         if (doc != null && f.exists()) {
@@ -542,31 +569,8 @@ public class trabalhopratico {
         String linha;
         linha = ler.nextLine();
         //leituraWiki(linha);
+        
+        leituraWook(linha);  //testar com o escritor "oscar wilde", por exemplo
 
-        /*String res = procuraLinkWook(linha);  //devolve um link para um livro
-        System.out.println(res);
-
-        String aux = procuraISBN(res);
-        System.out.println(aux);
-
-        String cod_autor = procuraCod_Autor(linha);
-        System.out.println(cod_autor);
-
-        String preco = procuraPreco(res);
-        System.out.println(preco);
-
-        String ano = procuraAno(res);
-        System.out.println(ano);
-
-        String titulo = procuraTitulo(res);
-        System.out.println(titulo);
-
-        String editor = procuraEditor(res);
-        System.out.println(editor);
-
-        Obra aux1 = new Obra(cod_autor, linha, titulo, aux, ano, editor, preco);
-        adicionaObra(aux1); */
-        leituraWook(linha);
     }
-
 }

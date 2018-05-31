@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ficha7a;
+package trabalhopratico;
 
 import java.io.File;
 import java.io.IOException;
