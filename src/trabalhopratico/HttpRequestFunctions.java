@@ -13,10 +13,6 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- *
- */
 public class HttpRequestFunctions {
 
     public static String capitalize(String input) {   //FUNÇÃO PARA CAPITALIZAR AS LETRAS INICIAIS DE CADA PALAVRA

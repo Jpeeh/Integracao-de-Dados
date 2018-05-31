@@ -1,15 +1,15 @@
 package trabalhopratico;
 
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jdom2.Attribute;
+import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
@@ -296,6 +296,23 @@ public class trabalhopratico {
         adicionaAutor(aux);
     }
 
+    public static void leituraWook(String linha) throws IOException {
+        String link, pesquisa, enome, isbnw, autorw, editorw, precow, cod_autorw, titulow, anow;
+
+        link = procuraLinkWook(linha);
+        autorw = linha;
+        cod_autorw = procuraCod_Autor(linha);
+        isbnw = procuraISBN(link);
+        editorw = procuraEditor(link);
+        precow = procuraPreco(link);
+        titulow = procuraTitulo(link);
+        anow = procuraAno(link);
+
+        Obra aux = new Obra(autorw, cod_autorw, titulow, isbnw, anow, editorw, precow);
+        System.out.println(aux.getAutor() + aux.getCod() + aux.getTitulo() + aux.getIsbn() + aux.getAno() + aux.getEditor() + aux.getPreco());
+        adicionaObra(aux);
+    }
+
     public static String procuraLinkWook(String nome) throws IOException {
         String er = "<a class=\"title-lnk\" href=\"([^\"]+)\"#productPageSectionComments>|<a href=\"(/livro/[^\"]+)\">";
         String link = "https://www.wook.pt/pesquisa/";
@@ -330,7 +347,7 @@ public class trabalhopratico {
     public static String procuraISBN(String nome) throws FileNotFoundException, IOException {
         String link = "https://www.wook.pt" + nome;
         String pesquisa = "";
-        String er = "<span id=\"productPageSectionDetails-collapseDetalhes-content-isbn\" class=\"col-xs-12\">ISBN: <span itemprop=\"isbn\" class=\"info\">([^<]+)</span></span>";
+        String er = "<span id=\"productPageSectionDetails-collapseDetalhes-content-isbn\" class=\"col-xs-12\">ISBN: <span class=\"info\">([^<]+)</span></span>";
         HttpRequestFunctions2.httpRequest1(link, pesquisa, "obras.html");
         Scanner ler = new Scanner(new FileInputStream("obras.html"));
         Pattern p = Pattern.compile(er);
@@ -342,6 +359,7 @@ public class trabalhopratico {
                 return m.group(1);
             }
         }
+        ler.close();
         return null;
     }
 
@@ -368,8 +386,8 @@ public class trabalhopratico {
     public static String procuraPreco(String res) throws IOException {
         String link = "https://www.wook.pt" + res;
         String pesquisa = "";
-        String er = "(?:\\s)*<div itemprop=\"price\" class=\"current\" id=\"productPageRightSectionTop-saleAction-price-current\">(?: )?([^<]+)<(?:span|meta) itemprop=\"priceCurrency\" content=\"EUR\">(?:€</span>)?</div>";
-        HttpRequestFunctions.httpRequest1(link, pesquisa, "obras.html");
+        String er = "<div class=\"[^\"]*\" id=\"[^\"]*\">([^<]+)</div>";
+        HttpRequestFunctions2.httpRequest1(link, pesquisa, "obras.html");
         Scanner ler = new Scanner(new FileInputStream("obras.html"));
         Pattern p = Pattern.compile(er);
         while (ler.hasNextLine()) {
@@ -385,11 +403,12 @@ public class trabalhopratico {
 
     public static String procuraAno(String res) throws IOException {
         String link = "https://www.wook.pt" + res;
-        String pesquisa = ""; //assumindo que o nome = pesquisa
-        String er = "<span id=\"productPageSectionDetails-collapseDetalhes-content-year\" class=\"col-xs-12\">Edição ou reimpressão: <span itemprop=\"datePublished\" class=\"info\">[0-9\\s-]*([^<]{4})</span></span>";
+        String pesquisa = "";
+        String er = "<span id=\"[^\"]*\" class=\"[^\"]*\">Edição ou reimpressão: <span  class=\"[^\"]*\">([^<]+)</span></span>";
         HttpRequestFunctions2.httpRequest1(link, pesquisa, "obras.html");
         Scanner ler = new Scanner(new FileInputStream("obras.html"));
         Pattern p1 = Pattern.compile(er);
+
         while (ler.hasNextLine()) {
             String linha = ler.nextLine();
             Matcher m = p1.matcher(linha);
@@ -398,14 +417,15 @@ public class trabalhopratico {
                 return m.group(1);
             }
         }
+        ler.close();
         return null;
     }
 
     public static String procuraTitulo(String res) throws IOException {
         String link = "https://www.wook.pt" + res;
         String pesquisa = "";
-        String er = "<h1 itemprop=\"name\" id=\"productPageRightSectionTop-title-h1\">([^<]+)</h1>";
-        HttpRequestFunctions.httpRequest1(link, pesquisa, "obras.html");
+        String er = "<h1   id=\"productPageRightSectionTop-title-h1\">([^<]+)</h1>";
+        HttpRequestFunctions2.httpRequest1(link, pesquisa, "obras.html");
         Scanner ler = new Scanner(new FileInputStream("obras.html"));
         Pattern p1 = Pattern.compile(er);
         while (ler.hasNextLine()) {
@@ -422,10 +442,11 @@ public class trabalhopratico {
     public static String procuraEditor(String res) throws IOException {
         String link = "https://www.wook.pt" + res;
         String pesquisa = "";
-        String er = "<span itemprop=\"[^\"]*\" itemscope itemtype=\"[^\"]*\" class=\"[^\"]*\">Editor: <span itemprop=\"[^\"]*\" class=\"[^\"]*\">([^<]+)</span></span>";
-        HttpRequestFunctions.httpRequest1(link, pesquisa, "obras.html");
+        String er = "<span  class=\"col-xs-12\">Editor: <span  class=\"info\">([^<]+)</span>";
+        HttpRequestFunctions2.httpRequest1(link, pesquisa, "obras.html");
         Scanner ler = new Scanner(new FileInputStream("obras.html"));
         Pattern p = Pattern.compile(er);
+
         while (ler.hasNextLine()) {
             String linha = ler.nextLine();
             Matcher m = p.matcher(linha);
@@ -465,8 +486,54 @@ public class trabalhopratico {
         obra.addContent(preco);
         obra.addContent(editor);
         raiz.addContent(obra);
-        
+
         XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "obras.xml");
+    }
+
+    public static void validaDocumentoAutores(String xmlFile) {
+        Document doc = XMLJDomFunctions.lerDocumentoXML(xmlFile);
+        File f = new File("autores.dtd");
+        if (doc != null && f.exists()) {
+            Element raiz = doc.getRootElement();
+            DocType dtd = new DocType(raiz.getName(), "escritores.dtd");
+            doc.setDocType(dtd);
+
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, xmlFile);
+
+            //CHAMAR	A FUNÇÃO DE VALIDAÇÃO por DTD
+            Document docDTD = JDOMFunctions_Validar.validarDTD(xmlFile);
+            if (docDTD == null) {
+                System.out.println("INVALIDO");
+            } else {
+                System.out.println("VALIDO");
+            }
+        }
+
+        //FALTA VALIDAÇÃO XSD!
+    }
+
+    public static void validarDocumentoObras(String xmlFile) throws IOException {
+        Document doc = XMLJDomFunctions.lerDocumentoXML(xmlFile);
+        File f = new File("obras.dtd");
+
+        if (doc != null && f.exists()) { //DTD e XML existem
+            Element raiz = doc.getRootElement();
+            //Atribuir DTD ao	ficheiro XML
+            DocType dtd = new DocType(raiz.getName(), "obras.dtd");
+            doc.setDocType(dtd);
+
+            //Gravar o XML com as alterações em disco
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, xmlFile);
+
+            //CHAMAR A FUNÇÃO DE VALIDAÇÃO por DTD
+            Document docDTD = JDOMFunctions_Validar.validarDTD(xmlFile);
+            if (docDTD == null) {
+                System.out.println("INVALIDO");
+            } else {
+                System.out.println("VALIDO");
+            }
+        }
+        //FALTA VALIDAÇÃO XSD!
     }
 
     public static void main(String[] args) throws IOException {
@@ -476,29 +543,30 @@ public class trabalhopratico {
         linha = ler.nextLine();
         //leituraWiki(linha);
 
-        String res = procuraLinkWook(linha);  //devolve um link para um livro
+        /*String res = procuraLinkWook(linha);  //devolve um link para um livro
         System.out.println(res);
-        
+
         String aux = procuraISBN(res);
         System.out.println(aux);
-        
+
         String cod_autor = procuraCod_Autor(linha);
         System.out.println(cod_autor);
-        
+
         String preco = procuraPreco(res);
         System.out.println(preco);
-        
+
         String ano = procuraAno(res);
         System.out.println(ano);
-        
+
         String titulo = procuraTitulo(res);
         System.out.println(titulo);
-        
+
         String editor = procuraEditor(res);
         System.out.println(editor);
-        
+
         Obra aux1 = new Obra(cod_autor, linha, titulo, aux, ano, editor, preco);
-        adicionaObra(aux1);
+        adicionaObra(aux1); */
+        leituraWook(linha);
     }
 
 }
