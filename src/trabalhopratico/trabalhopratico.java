@@ -660,6 +660,16 @@ public class trabalhopratico {
         return pesquisaemFicheiro("obras.xml", pesquisa);
     }
 
+    public static String pesquisaporNacionalidade(String nacionalidade) {
+        return pesquisaemAutores("/autores/Autor[Nacionalidade=\"" + nacionalidade + "\"]/Nome"); //pesquisa a nacionalidade passada como argumento
+
+    }
+
+    public static String pesquisaporGenero(String genero) {
+        return pesquisaemAutores("/autores/Autor[contains(.,\"" + genero + "\")]/Nome"); //pesquisa a nacionalidade passada como argumento
+
+    }
+
     public static String obterEscritorporTituloouIsbn(String tituloIsbn) {
         return pesquisaemObras("/Obras/Livro[ISBN=\"" + tituloIsbn + "\" or Titulo=\"" + tituloIsbn + "\"]/Autor");
     }
@@ -673,11 +683,10 @@ public class trabalhopratico {
     }
 
     public static void main(String[] args) throws IOException, SAXException {
-        System.out.println("Autor a pesquisar: ");
-        Scanner ler = new Scanner(System.in);  //PARA LER DA CONSOLA
-        String linha;
-        //linha = ler.nextLine();
-        //leituraWook(linha);  //testar com o escritor "oscar wilde", por exemplo
-        
+        /*System.out.println("Autor a pesquisar: ");
+         Scanner ler = new Scanner(System.in);  //PARA LER DA CONSOLA
+         String linha;
+         linha = ler.nextLine();
+         leituraWook(linha);  //testar com o escritor "oscar wilde", por exemplo */
     }
 }
