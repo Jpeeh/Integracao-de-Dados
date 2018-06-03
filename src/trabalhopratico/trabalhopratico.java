@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,6 +13,10 @@ import org.jdom2.Attribute;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.Namespace;
+
+//IMPLEMENTAR MAIS FUNÇÕES PARA ALTERAR OS DADOS DOS AUTORES E DAS OBRAS (NO .XML)
+//IMPLEMENTAR MAIS PESQUISAS XPATH !
 
 public class trabalhopratico {
 
@@ -304,7 +307,7 @@ public class trabalhopratico {
             titulow = procuraTitulo(link.get(i));
             anow = procuraAno(link.get(i));
 
-            Obra aux = new Obra(autorw, cod_autorw, titulow, isbnw, anow, editorw, precow);
+            Obra aux = new Obra(cod_autorw,autorw, titulow, isbnw, anow, editorw, precow);
             System.out.println(aux.getAutor() + aux.getCod() + aux.getTitulo() + aux.getIsbn() + aux.getAno() + aux.getEditor() + aux.getPreco());
             adicionaObra(aux);
         }
@@ -497,7 +500,28 @@ public class trabalhopratico {
             }
         }
 
-        //FALTA VALIDAÇÃO XSD!
+        f = new File("autores.xsd");
+        if (doc != null && f.exists()) { //XSD e XML existem
+            Element raiz = doc.getRootElement();
+            //Atribuir XSD ao ficheiro XML
+            Namespace XSI = Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+
+            raiz.addNamespaceDeclaration(XSI);
+
+            raiz.setAttribute(new Attribute("noNamespaceSchemaLocation", "autores.xsd", Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance")));
+
+            //Gravar o XML com as alterações em	disco
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, xmlFile);
+
+            //CHAMAR A FUNÇÃO DE VALIDAÇÃO por XSD 
+            /*
+             Document docXSD = JDOMFunctions_Validar.validarXSD(xmlFile);
+             if (docXSD == null) {
+             System.out.println("INVALIDO por XSD");
+             } else {
+             System.out.println("VALIDO por XSD");
+             } */
+        }
     }
 
     public static void validarDocumentoObras(String xmlFile) throws IOException {
@@ -521,7 +545,29 @@ public class trabalhopratico {
                 System.out.println("VALIDO");
             }
         }
-        //FALTA VALIDAÇÃO XSD!
+        
+        f = new File("obras.xsd");
+        if (doc != null && f.exists()) {//XSD e XML existem
+            Element raiz = doc.getRootElement();
+            //Atribuir XSD ao ficheiro XML
+            Namespace XSI = Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+
+            raiz.addNamespaceDeclaration(XSI);
+
+            raiz.setAttribute(new Attribute("noNamespaceSchemaLocation", "escritores.xsd", Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance")));
+
+            //Gravar o XML com as alterações em	disco
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, xmlFile);
+
+            //CHAMAR A FUNÇÃO DE VALIDAÇÃO por XSD
+            /*
+            Document docXSD = JDOMFunctions_Validar.validarXSD(xmlFile);
+            if (docXSD == null) {
+                System.out.println("INVALIDO por XSD");
+            } else {
+                System.out.println("VALIDO por XSD");
+            } */
+        }
     }
 
     public static String removeAutor(String procura) { //REMOVE AUTOR DE AUTORES.XML E AS SUAS OBRAS EM OBRAS.XML
@@ -577,14 +623,97 @@ public class trabalhopratico {
         }
         return res;
     }
+    
+    public static String mudaNomeAutor(String procura, String novoNome) {
+        Element raiz;
+        String res = null;
+        Document doc = XMLJDomFunctions.lerDocumentoXML("autores.xml");
+        if (doc == null) {
+            res = "O ficheiro não existe";
+            return res;
+        } else {
+            raiz = doc.getRootElement();
+        }
 
+        List todosEscritores = raiz.getChildren("Autor");
+        boolean found = false;
+
+        for (int i = 0; i < todosEscritores.size(); i++) {
+            Element escritor = (Element) todosEscritores.get(i);
+            if (escritor.getChild("Nome").getText().contains(procura)) {
+                escritor.getChild("Nome").setText(novoNome);
+                res = "Nome do autor " + procura + " alterado para " + novoNome + " com sucesso!";
+                found = true;
+            }
+        }
+        if (!found) {
+            res = "Nenhum autor chamado " + procura + " foi encontrado";
+            return res;
+        } else {
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "autores.xml");
+            doc = XMLJDomFunctions.lerDocumentoXML("obras.xml");
+            if (doc == null) {
+                res = "O ficheiro não existe";
+                return res;
+            } else {
+                raiz = doc.getRootElement();
+            }
+
+            List todosObras = raiz.getChildren("Livro");
+            found = false;
+
+            for (int i = 0; i < todosObras.size(); i++) {
+                Element livro = (Element) todosObras.get(i);
+                if (livro.getChild("Autor").getText().contains(procura)) {
+                    livro.getChild("Autor").setText(novoNome);
+                    res = res + "\nNome do autor " + procura + " alterado com sucesso!";
+                    found = true;
+                }
+            }
+            if (!found) {
+                res = "Nenhum autor chamado " + procura + " foi encontrado";
+            }
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "obras.xml");
+        }
+        return res;
+    }
+    
+    public static String pesquisaemFicheiro(String nome_ficheiro, String pesquisa) {
+        Document doc = XMLJDomFunctions.lerDocumentoXML(nome_ficheiro);
+        List res_pesquisa2 = JaxenFunctions_XPATH.pesquisaXPath(doc, pesquisa); //vai receber o doc XML e a pesquisa XPATH
+
+        String resultados = JaxenFunctions_XPATH.listarResultado(res_pesquisa2);
+        System.out.println(resultados);
+        return resultados; //retorna os resultados 
+    }
+    
+    public static String pesquisaemAutores(String pesquisa) {
+        return pesquisaemFicheiro("autores.xml", pesquisa);
+    }
+
+    public static String pesquisaemObras(String pesquisa) {
+        return pesquisaemFicheiro("obras.xml", pesquisa);
+    }
+    
+    public static String obterEscritorporTituloouIsbn(String tituloIsbn) {
+        return pesquisaemObras("/Obras/Livro[ISBN=\"" + tituloIsbn + "\" or Titulo=\"" + tituloIsbn + "\"]/Autor");
+    }
+    
+    public static String mostraAutores() {
+        return pesquisaemAutores("/autores/Autor");
+    }
+
+    public static String mostraObras() {
+        return pesquisaemObras("/Obras/Livro");
+    }
+    
+  
     public static void main(String[] args) throws IOException {
         System.out.println("Autor a pesquisar: ");
         Scanner ler = new Scanner(System.in);  //PARA LER DA CONSOLA
         String linha;
-        linha = ler.nextLine();
+        //linha = ler.nextLine();
         //leituraWiki(linha); 
-
         //leituraWook(linha);  //testar com o escritor "oscar wilde", por exemplo
     }
 }
