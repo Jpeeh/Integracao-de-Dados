@@ -3,18 +3,18 @@
   <xs:element name="obras" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="livro">
+        <xs:element name="autor">
           <xs:complexType>
             <xs:sequence>
-	      <xs:element name="cod_autor" type="xs:string" minOccurs="0" />
-              <xs:element name="autor" type="xs:string" minOccurs="0" />
-              <xs:element name="titulo" type="xs:string" minOccurs="0" />
-              <xs:element name="isbn" type="xs:string" minOccurs="0" />
-              <xs:element name="ano" type="xs:string" minOccurs="0" />
-              <xs:element name="editor" type="xs:string" minOccurs="0" />
-              <xs:element name="preco" type="xs:string" minOccurs="0" />
-              <xs:element name="foto" type="xs:string" minOccurs="0" />
+              <xs:element name="codigo_autor" type="xs:string" minOccurs="0" msdata:Ordinal="0" />
+			  <xs:element name="autor" type="xs:string" minOccurs="0" msdata:Ordinal="3" />
+			  <xs:element name="titulo" type="xs:string" minOccurs="0" msdata:Ordinal="4" />
+              <xs:element name="isbn" type="xs:string" minOccurs="0" msdata:Ordinal="5" />
+              <xs:element name="ano" type="xs:string" minOccurs="0" msdata:Ordinal="6" />
+			  <xs:element name="preco" type="xs:string" minOccurs="0" msdata:Ordinal="1" />
+			  <xs:element name="editor" type="xs:string" minOccurs="0" msdata:Ordinal="1" />
             </xs:sequence>
+            <xs:attribute name="id" type="xs:string" />
           </xs:complexType>
         </xs:element>
       </xs:choice>

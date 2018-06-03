@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<autores>
+<!DOCTYPE autores SYSTEM "autores.dtd">
+<autores xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="autores.xsd">
      <Autor id="1">
           <Nome>Jose Saramago</Nome>
+          <Data_Nascimento>16 de outubro de 1854</Data_Nascimento>
+          <Data_Falecimento>30 de novembro de 1900</Data_Falecimento>
+          <Nacionalidade>Portugues</Nacionalidade>
+          <Generos />
+          <Link_Foto>//upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Oscar_Wilde_Sarony.jpg/200px-Oscar_Wilde_Sarony.jpg</Link_Foto>
+     </Autor>
+     <Autor id="0">
+          <Nome>Oscar Wilde</Nome>
           <Data_Nascimento>16 de outubro de 1854</Data_Nascimento>
           <Data_Falecimento>30 de novembro de 1900</Data_Falecimento>
           <Nacionalidade>Irlandeses</Nacionalidade>
           <Generos />
           <Link_Foto>//upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Oscar_Wilde_Sarony.jpg/200px-Oscar_Wilde_Sarony.jpg</Link_Foto>
+     </Autor>
+     <Autor id="1">
+          <Nome>Paul Auster</Nome>
+          <Data_Nascimento />
+          <Data_Falecimento />
+          <Nacionalidade />
+          <Generos>Romance</Generos>
+          <Link_Foto>//upload.wikimedia.org/wikipedia/commons/thumb/0/04/Paul_Auster_in_New_York_City_2008.jpg/200px-Paul_Auster_in_New_York_City_2008.jpg</Link_Foto>
      </Autor>
 </autores>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Obras>
+<!DOCTYPE Obras SYSTEM "obras.dtd">
+<Obras xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="obras.xsd">
      <Livro>
           <Codigo_Autor>19398</Codigo_Autor>
           <Autor>Jose Saramago</Autor>
@@ -8,86 +9,5 @@
           <Ano>05-2010</Ano>
           <Preco>8,00€</Preco>
           <Editor>11 X 17</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19398</Codigo_Autor>
-          <Autor>Jose Saramago</Autor>
-          <Titulo>O Gigante Egoísta</Titulo>
-          <ISBN>9789726997948</ISBN>
-          <Ano>06-2017</Ano>
-          <Preco>13,78€</Preco>
-          <Editor>Nova Vega</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19398</Codigo_Autor>
-          <Autor>Jose Saramago</Autor>
-          <Titulo>O Fantasma de Canterville</Titulo>
-          <ISBN>978-972-0-72695-7</ISBN>
-          <Ano>04-2018</Ano>
-          <Preco>8,80€</Preco>
-          <Editor>Porto Editora</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19398</Codigo_Autor>
-          <Autor>Jose Saramago</Autor>
-          <Titulo>O Menino-Estrela</Titulo>
-          <ISBN>978-972-0-72716-9</ISBN>
-          <Ano>02-2017</Ano>
-          <Preco>7,70€</Preco>
-          <Editor>Porto Editora</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19398</Codigo_Autor>
-          <Autor>Jose Saramago</Autor>
-          <Titulo>O Gigante Egoísta e O Príncipe Feliz</Titulo>
-          <ISBN>978-972-0-72684-1</ISBN>
-          <Ano>08-2017</Ano>
-          <Preco>8,80€</Preco>
-          <Editor>Porto Editora</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19398</Codigo_Autor>
-          <Autor>Jose Saramago</Autor>
-          <Titulo>O Aniversário da Infanta</Titulo>
-          <ISBN>978-972-0-72718-3</ISBN>
-          <Ano>04-2018</Ano>
-          <Preco>7,70€</Preco>
-          <Editor>Porto Editora</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19398</Codigo_Autor>
-          <Autor>Jose Saramago</Autor>
-          <Titulo>Contos Escolhidos de Oscar Wilde</Titulo>
-          <ISBN>9789897075209</ISBN>
-          <Ano>09-2017</Ano>
-          <Preco>8,79€</Preco>
-          <Editor>Fábula</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19398</Codigo_Autor>
-          <Autor>Jose Saramago</Autor>
-          <Titulo>O Menino-estrela</Titulo>
-          <ISBN>978-972-0-71660-6</ISBN>
-          <Ano>10-2008</Ano>
-          <Preco>16,00€</Preco>
-          <Editor>Porto Editora</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19398</Codigo_Autor>
-          <Autor>Jose Saramago</Autor>
-          <Titulo>O Fantasma de Canterville</Titulo>
-          <ISBN>9789727821518</ISBN>
-          <Ano>02-2014</Ano>
-          <Preco>9,00€</Preco>
-          <Editor>Colares Editora</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19398</Codigo_Autor>
-          <Autor>Jose Saramago</Autor>
-          <Titulo>O Retrato de Dorian Gray</Titulo>
-          <ISBN>9789727083916</ISBN>
-          <Ano>04-1998</Ano>
-          <Preco>16,00€</Preco>
-          <Editor>Relógio D'Água</Editor>
      </Livro>
 </Obras>

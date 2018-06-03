@@ -1,0 +1,25 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT autores (autor)+>
+
+<!ELEMENT autor (nome,data_nascimento,data_falecimento,nacionalidade,generos,link_foto)>
+<!ATTLIST autor ID ID #REQUIRED>
+
+<!ELEMENT nome (#PCDATA)>
+
+<!ELEMENT data_nascimento (#PCDATA)>
+
+<!ELEMENT data_morte (#PCDATA)>
+
+<!ELEMENT nacionalidade (#PCDATA)>
+
+<!ELEMENT generos (#PCDATA)>
+
+<!ELEMENT link_foto (#PCDATA)>
+
+<!ATTLIST autores
+ xmlns:xsi CDATA #IMPLIED>
+
+<!ATTLIST autores 
+ xsi:noNamespaceSchemaLocation CDATA #IMPLIED>
+

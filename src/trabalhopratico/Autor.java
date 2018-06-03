@@ -5,10 +5,10 @@ package trabalhopratico;
  * @author Joao & Miguel
  */
 public class Autor {
-    int sequencia = 0;
-    String nome, data_nasc, data_morte, nacionalidade, generos, premios, link_foto;
+    private int sequencia;
+    private String nome, data_nasc, data_morte, nacionalidade, generos, premios, link_foto;
 
-     public Autor(String nome, String data_nasc, String data_morte, String nacionalidade, String generos, String premios, String link_foto) {
+     public Autor(int id, String nome, String data_nasc, String data_morte, String nacionalidade, String generos, String premios, String link_foto) {
         this.nome = nome;
         this.data_nasc = data_nasc;
         this.data_morte = data_morte;
@@ -17,7 +17,7 @@ public class Autor {
         this.premios = premios;
         this.generos = generos;
         this.link_foto = link_foto;
-        sequencia = sequencia + 1;
+        sequencia = id;
     }
 
     public String getData_morte() {
