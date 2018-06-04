@@ -541,7 +541,7 @@ public class trabalhopratico {
         if(doc!=null)
         {
             Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, fxml, fxsl);
-            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo,"fotos.html");
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo,"novohtml.html");
         }
     }
     public static void juntaXML(String fxml, String fxsl)
@@ -550,7 +550,7 @@ public class trabalhopratico {
         if(doc!=null)
         {
             Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, fxml, fxsl);
-            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo,"junto.xml");
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo,"novoxml.xml");
         }
     }
 
