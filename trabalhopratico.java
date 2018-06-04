@@ -534,6 +534,25 @@ public class trabalhopratico {
             }
         }
     }
+    
+    public static void transformaHtml(String fxml, String fxsl)
+    {
+        Document doc = XMLJDomFunctions.lerDocumentoXML(fxml);
+        if(doc!=null)
+        {
+            Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, fxml, fxsl);
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo,"fotos.html");
+        }
+    }
+    public static void juntaXML(String fxml, String fxsl)
+    {
+        Document doc = XMLJDomFunctions.lerDocumentoXML(fxml);
+        if(doc!=null)
+        {
+            Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, fxml, fxsl);
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo,"junto.xml");
+        }
+    }
 
     public static String removeAutor(String procura) { //REMOVE AUTOR DE AUTORES.XML E AS SUAS OBRAS EM OBRAS.XML
         Element raiz;
