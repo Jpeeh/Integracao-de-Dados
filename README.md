@@ -6,3 +6,8 @@ Regex Java Project
  - [x] Completar a Interface gráfica do Programa (com as chamadas das funções);
  - [x] Completar o trabalho com mais funções para alteração dos Dados no ficheiro .XML;
  - [x] Completar o trabalho com mais funções para as pesquisas XPath .
+ 
+ -> Verificar em Frame:
+ - [x] Mostra obras
+ - [x] Validar escritores
+ - [x] Validar obras
