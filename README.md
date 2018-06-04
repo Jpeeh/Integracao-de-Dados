@@ -8,6 +8,5 @@ Regex Java Project
  - [x] Completar o trabalho com mais funções para as pesquisas XPath .
  
  -> Verificar em Frame:
- - [x] Mostra obras
- - [x] Validar escritores
- - [x] Validar obras
+ - [x] Função transformarHTML (não está a funcionar ainda!);
+ - [x] Função juntar (não está a funcionar ainda!).
