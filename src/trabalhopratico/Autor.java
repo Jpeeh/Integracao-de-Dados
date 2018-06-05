@@ -5,10 +5,11 @@ package trabalhopratico;
  * @author Joao & Miguel
  */
 public class Autor {
-    private int sequencia;
+    public static int sequencia  = 0;
+    public int id;
     private String nome, data_nasc, data_morte, nacionalidade, generos, premios, link_foto;
 
-     public Autor(int id, String nome, String data_nasc, String data_morte, String nacionalidade, String generos, String premios, String link_foto) {
+     public Autor(String nome, String data_nasc, String data_morte, String nacionalidade, String generos, String premios, String link_foto) {
         this.nome = nome;
         this.data_nasc = data_nasc;
         this.data_morte = data_morte;
@@ -17,7 +18,11 @@ public class Autor {
         this.premios = premios;
         this.generos = generos;
         this.link_foto = link_foto;
-        sequencia = id;
+        this.id = sequenciaMaisMais();
+     }
+     
+    private static int sequenciaMaisMais (){  //tornar mais seguro o valor de sequencia
+        return sequencia++;
     }
 
     public String getData_morte() {
