@@ -713,21 +713,9 @@ public class trabalhopratico {
             XMLJDomFunctions.escreverDocumentoParaFicheiro(novo, "fotos.html");
         }
     }
-    
-    public static void juntaXML(String xml, String xsl){  //CORRIGIR FICHEIRO JUNTO.XSL
-        Document doc = XMLJDomFunctions.lerDocumentoXML(xml);
-        if (doc != null) {
-            Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, xml, xsl);
-            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo, "junto.xml");
-        }
-    }
 
     public static void main(String[] args) throws IOException, SAXException {
-        Scanner ler = new Scanner(System.in);
-        //String linha = ler.nextLine(); 
-        //leituraWook(linha);
-        String linha;
-        linha = mudaNacionalidade("Pablo Neruda","portugues");
-        System.out.println(linha);
+  
+        
     }
 }
