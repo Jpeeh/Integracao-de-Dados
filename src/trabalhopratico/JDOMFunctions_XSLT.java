@@ -29,13 +29,15 @@ public class JDOMFunctions_XSLT {
         
       try{    
            DocType d = XMLdoc.getDocType();
-           if(d!=null){
-               XMLdoc.setDocType(null);
+           if(d != null){
+               XMLdoc.setDocType(d);
                XMLJDomFunctions.escreverDocumentoParaFicheiro(XMLdoc, xmlFile);
                XMLdoc=XMLJDomFunctions.lerDocumentoXML(xmlFile);
            }
+           
            XSLTransformer transformer = new XSLTransformer(xslFile);
            Document doc2 = transformer.transform(XMLdoc);
+           
            if(doc2 == null) {
                System.out.println("Null");
            }

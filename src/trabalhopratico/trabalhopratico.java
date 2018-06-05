@@ -25,13 +25,11 @@ public class trabalhopratico {
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
 
         String er_nome = "<h1 id=\"firstHeading\" class=\"firstHeading\" lang=\"pt\">([^<]+)</h1>";
-        String er_nac = "<a href=\"/wiki/([^>]+)\" title=\"([^>]+)\">([^<]+)</a>";
 
         Scanner ler;
         ler = new Scanner(new FileInputStream("autores.html"));  //PARA LER DO FICHEIRO HTML ONDE ESTÃO OS DADOS
 
         Pattern p1 = Pattern.compile(er_nome);
-        //Pattern p3 = Pattern.compile(er_generos);
         Matcher m;
         String linha;
 
@@ -49,7 +47,7 @@ public class trabalhopratico {
 
     public static String procuraDataNasc(String nome) throws IOException { //FUNCIONA SÓ PARA "OSCAR WILDE"
         String er = "<td scope=\"row\" style=\"vertical-align: top; text-align: left; font-weight:bold; padding:4px 4px 4px 0;\">Nascimento</td>";
-        String er1 = "[<span style=\"white-space:nowrap;\">]?<a href=\"/wiki/[^\"]+#Nascimentos\" title=\"[^\"]+\">([^<]+)</a> de <a href=\"/wiki/[^\"]+\" title=\"[^\"]+\">([^<]+)</a>[[^<]+</span>]?<br />";        //STRING ER1 PRECISA DE SER CORRIGIDA, SÓ ESTÁ A DAR VALORES CORRCETOS PARA O AUTOR 'PABLO AUSTER' !!
+        String er1 = "<td style=\"vertical-align: top; text-align: left; padding:4px 4px 4px 0;\">[<span style=\"white-space:nowrap;\">]?<a href=\"/wiki/[^\"]+#Nascimentos\" class=\"mw-redirect\"? title=\"[^\"]+\">([^<]+)</a> de <a href=\"/wiki/[^\"]+\" title=\"[^\"]+\">([^<]+)</a>[[^<]+]?[</span>]?<br />";  //STRING ER1 PRECISA DE SER CORRIGIDA, SÓ ESTÁ A DAR VALORES CORRCETOS PARA O AUTOR 'PABLO AUSTER' !!
 
         String link = "https://pt.wikipedia.org/wiki/";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
@@ -142,7 +140,6 @@ public class trabalhopratico {
                 }
             }
         }
-
         ler.close();
         return null;
     }
@@ -170,15 +167,12 @@ public class trabalhopratico {
                         morte = m2.group(1) + " de " + m2.group(2);
                         ler.close();
                         return morte;
-                    } else {
-                        ler.close();
-                        return "ainda em actividade";
                     }
                 }
             }
         }
         ler.close();
-        return null;
+        return "ainda em actividade";
     }
 
     public static String procuraPremios(String nome) throws IOException {  //SÓ ENCONTRA O 1º PRÉMIO DE CADA AUTOR
@@ -250,8 +244,7 @@ public class trabalhopratico {
         }
 
         Element autor = new Element("Autor");
-        String id = Integer.toString(aux.getSequencia());
-        Attribute a = new Attribute("id", id);
+        Attribute a = new Attribute("id", Integer.toString(aux.getSequencia()));
         autor.setAttribute(a);
 
         Element nome = new Element("Nome").addContent(aux.getNome());
@@ -681,12 +674,25 @@ public class trabalhopratico {
     public static String mostraObras() {
         return pesquisaemObras("/Obras/Livro");
     }
+    
+    public static void transformaHtml(String xml, String xsl) {
+        Document doc = XMLJDomFunctions.lerDocumentoXML(xml);
+        if (doc != null) {
+            Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, xml, xsl);
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo, "fotos.html");
+        }
+    }
+    
+    public static void juntaXML(String xml, String xsl){
+        Document doc = XMLJDomFunctions.lerDocumentoXML(xml);
+        if (doc != null) {
+            Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, xml, xsl);
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo, "junto.xml");
+        }
+    }
 
     public static void main(String[] args) throws IOException, SAXException {
-        /*System.out.println("Autor a pesquisar: ");
-         Scanner ler = new Scanner(System.in);  //PARA LER DA CONSOLA
-         String linha;
-         linha = ler.nextLine();
-         leituraWook(linha);  //testar com o escritor "oscar wilde", por exemplo */
+        //transformaHtml("autores.xml","foto.xsl");
+        juntaXML("autores.xml","junto.xsl");
     }
 }
