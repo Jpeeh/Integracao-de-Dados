@@ -534,23 +534,20 @@ public class trabalhopratico {
             }
         }
     }
-    
-    public static void transformaHtml(String fxml, String fxsl)
-    {
+
+    public static void transformaHtml(String fxml, String fxsl) {
         Document doc = XMLJDomFunctions.lerDocumentoXML(fxml);
-        if(doc!=null)
-        {
+        if (doc != null) {
             Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, fxml, fxsl);
-            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo,"novohtml.html");
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo, "novohtml.html");
         }
     }
-    public static void juntaXML(String fxml, String fxsl)
-    {
+
+    public static void juntaXML(String fxml, String fxsl) {
         Document doc = XMLJDomFunctions.lerDocumentoXML(fxml);
-        if(doc!=null)
-        {
+        if (doc != null) {
             Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, fxml, fxsl);
-            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo,"novoxml.xml");
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo, "novoxml.xml");
         }
     }
 
@@ -579,7 +576,7 @@ public class trabalhopratico {
         }
 
         if (!found) {
-            res = "Nenhum escritor chamado " + procura + " foi encontrado";
+            res = "Nenhum escritor chamado " + procura + " foi encontrado1";
         } else {
             XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "autores.xml");
             doc = XMLJDomFunctions.lerDocumentoXML("obras.xml");
@@ -591,7 +588,7 @@ public class trabalhopratico {
             }
 
             List todosObras = raiz.getChildren("Livro");
-            found = false;
+            //found = false;
             for (int i = 0; i < todosObras.size(); i++) {
                 Element livro = (Element) todosObras.get(i);
                 if (livro.getChild("Autor").getText().contains(procura)) {
@@ -600,9 +597,11 @@ public class trabalhopratico {
                     found = true;
                 }
             }
-            if (!found) {
-                res = "Nenhum escritor chamado " + procura + " foi encontrado";
+            if (found) {
+                res = "\nLivro do escritor " + procura + " removido com sucesso!";
             }
+            else
+                res = "Nenhum escritor chamado " + procura + " foi encontrado2";
             XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "obras.xml");
         }
         return res;
@@ -662,72 +661,68 @@ public class trabalhopratico {
         return res;
     }
 
-    
-    public static String mudaNacionalidade(String procura, String nova){
-        
-        Element	raiz;
+    public static String mudaNacionalidade(String procura, String nova) {
+
+        Element raiz;
         String res = null;
-        Document doc=XMLJDomFunctions.lerDocumentoXML("escritores.xml");
+        Document doc = XMLJDomFunctions.lerDocumentoXML("escritores.xml");
         if (doc == null) {
-            res="O ficheiro não existe";
+            res = "O ficheiro não existe";
             return res;
-        } 
-        else{
+        } else {
             raiz = doc.getRootElement();
         }
-        
-        List todosEscritores = raiz.getChildren("escritor"); 
+
+        List todosEscritores = raiz.getChildren("escritor");
         boolean found = false;
-          
-            for(int i=0;i<todosEscritores.size();i++)
-            {
-                Element escritor = (Element)todosEscritores.get(i);
-                if(escritor.getChild("nome").getText().contains(procura)){
-                    escritor.getChild("nacionalidade").setText(nova);
-                    res="Nacionalidade do escritor " + procura + " alterada com sucesso!";
-                    found=true;
-                }
-	    }	
-	    if(!found)
-                res="Nenhum escritor chamado " + procura + " foi encontrado";
-          
-            XMLJDomFunctions.escreverDocumentoParaFicheiro(doc,"escritores.xml");
-            return res;
+
+        for (int i = 0; i < todosEscritores.size(); i++) {
+            Element escritor = (Element) todosEscritores.get(i);
+            if (escritor.getChild("nome").getText().contains(procura)) {
+                escritor.getChild("nacionalidade").setText(nova);
+                res = "Nacionalidade do escritor " + procura + " alterada com sucesso!";
+                found = true;
+            }
+        }
+        if (!found) {
+            res = "Nenhum escritor chamado " + procura + " foi encontrado";
+        }
+
+        XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "escritores.xml");
+        return res;
     }
-    
-      public static String mudaDataMorte(String procura, String nova){
-        
-        Element	raiz;
+
+    public static String mudaDataMorte(String procura, String nova) {
+
+        Element raiz;
         String res = null;
-        Document doc=XMLJDomFunctions.lerDocumentoXML("escritores.xml");
+        Document doc = XMLJDomFunctions.lerDocumentoXML("escritores.xml");
         if (doc == null) {
-            res="O ficheiro não existe";
+            res = "O ficheiro não existe";
             return res;
-        } 
-        else{
+        } else {
             raiz = doc.getRootElement();
         }
-        
-        List todosEscritores = raiz.getChildren("escritor"); 
+
+        List todosEscritores = raiz.getChildren("escritor");
         boolean found = false;
-          
-            for(int i=0;i<todosEscritores.size();i++)
-            {
-                Element escritor = (Element)todosEscritores.get(i);
-                if(escritor.getChild("nome").getText().contains(procura)){
-                    escritor.getChild("data_morte").setText(nova);
-                    res="Data de morte do escritor " + procura + " alterada com sucesso!";
-                    found=true;
-                }
-	    }	
-	    if(!found)
-                res="Nenhum escritor chamado " + procura + " foi encontrado";
-          
-            XMLJDomFunctions.escreverDocumentoParaFicheiro(doc,"escritores.xml");   
-            return res;
+
+        for (int i = 0; i < todosEscritores.size(); i++) {
+            Element escritor = (Element) todosEscritores.get(i);
+            if (escritor.getChild("nome").getText().contains(procura)) {
+                escritor.getChild("data_morte").setText(nova);
+                res = "Data de morte do escritor " + procura + " alterada com sucesso!";
+                found = true;
+            }
+        }
+        if (!found) {
+            res = "Nenhum escritor chamado " + procura + " foi encontrado";
+        }
+
+        XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "escritores.xml");
+        return res;
     }
-      
-      
+
     public static String pesquisaemFicheiro(String nome_ficheiro, String pesquisa) {
         Document doc = XMLJDomFunctions.lerDocumentoXML(nome_ficheiro);
         List res_pesquisa2 = JaxenFunctions_XPATH.pesquisaXPath(doc, pesquisa); //vai receber o doc XML e a pesquisa XPATH
@@ -773,8 +768,8 @@ public class trabalhopratico {
          String linha;
          linha = ler.nextLine();
          leituraWook(linha);  //testar com o escritor "oscar wilde", por exemplo */
-        
+
         Frame f = new Frame();
-        f.setVisible(true);   
+        f.setVisible(true);
     }
 }
