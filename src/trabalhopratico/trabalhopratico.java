@@ -580,6 +580,38 @@ public class trabalhopratico {
         }
         return res;
     }
+    
+    public static String mudaNacionalidade(String procura, String nova) {
+        Element raiz;
+        String res = null;
+        Document doc = XMLJDomFunctions.lerDocumentoXML("autores.xml");
+        if (doc == null) {
+            res = "O ficheiro não existe";
+            return res;
+        } else {
+            raiz = doc.getRootElement();
+        }
+
+        List todosEscritores = raiz.getChildren("Autor");
+        boolean found = false;
+
+        for (int i = 0; i < todosEscritores.size(); i++) {
+            Element escritor = (Element) todosEscritores.get(i);
+            if (escritor.getChild("Nome").getText().contains(procura)) {
+                escritor.getChild("Nacionalidade").setText(nova);
+                res = "Nacionalidade do escritor " + procura + " alterada com sucesso!";
+                found = true;
+            }
+        }
+        if (found) {
+            res = "Nome do escritor " + procura + " alterado com sucesso!";
+        } else {
+            res = "Nenhum escritor chamado " + procura + " foi encontrado2";
+        }
+
+        XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "autores.xml");
+        return res;
+    }
 
     public static String mudaNomeAutor(String procura, String novoNome) {
         Element raiz;
@@ -682,7 +714,7 @@ public class trabalhopratico {
         }
     }
     
-    public static void juntaXML(String xml, String xsl){
+    public static void juntaXML(String xml, String xsl){  //CORRIGIR FICHEIRO JUNTO.XSL
         Document doc = XMLJDomFunctions.lerDocumentoXML(xml);
         if (doc != null) {
             Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, xml, xsl);
@@ -691,6 +723,11 @@ public class trabalhopratico {
     }
 
     public static void main(String[] args) throws IOException, SAXException {
-        
+        Scanner ler = new Scanner(System.in);
+        //String linha = ler.nextLine(); 
+        //leituraWook(linha);
+        String linha;
+        linha = mudaNacionalidade("Pablo Neruda","portugues");
+        System.out.println(linha);
     }
 }

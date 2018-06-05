@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <autores xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="autores.xsd">
-
+     <Autor id="1">
+          <Nome>Oscar Wilde</Nome>
+          <Data_Nascimento />
+          <Data_Falecimento>30 de novembro de 1900</Data_Falecimento>
+          <Nacionalidade>Irlandeses</Nacionalidade>
+          <Generos />
+          <Link_Foto>//upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Oscar_Wilde_Sarony.jpg/200px-Oscar_Wilde_Sarony.jpg</Link_Foto>
+     </Autor>
+     <Autor id="2">
+          <Nome>Pablo Neruda</Nome>
+          <Data_Nascimento />
+          <Data_Falecimento>23 de setembro de 1973</Data_Falecimento>
+          <Nacionalidade>portugues</Nacionalidade>
+          <Generos />
+          <Link_Foto>//upload.wikimedia.org/wikipedia/commons/thumb/0/04/Pablo_Neruda.jpg/200px-Pablo_Neruda.jpg</Link_Foto>
+     </Autor>
 </autores>

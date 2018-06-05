@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <autores xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="autores.xsd">
-     <Autor id="1">
-          <Nome>Jose Saramago</Nome>
-     </Autor>
-     <Autor id="0">
-          <Nome>Oscar Wilde</Nome>
-     </Autor>
-     <Autor id="1">
-          <Nome>Paul Auster</Nome>
-     </Autor>
+
 </autores>
