@@ -335,7 +335,7 @@ public class Frame extends javax.swing.JFrame {
                                             resultado.setText(res);
                                         }
                                     } else {
-                                        if (x.equals("Pesquisa por titulo ou isbn")) {
+                                        if (x.equals("Pesquisa por Titulo ou ISBN")) {
                                             res = trabalhopratico.obterEscritorporTituloouIsbn(jTextField1.getText());
                                             if (res == null) {
                                                 resultado.setText("Erro!");
