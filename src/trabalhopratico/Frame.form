@@ -11,6 +11,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Menu"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu2ActionPerformed"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
@@ -110,7 +113,6 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
                   <Component id="jScrollPane1" alignment="1" pref="433" max="32767" attributes="0"/>
                   <Component id="jComboBox1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
@@ -123,15 +125,6 @@
                           <Component id="jTextField2" pref="278" max="32767" attributes="0"/>
                           <Component id="jTextField1" max="32767" attributes="0"/>
                       </Group>
-=======
-                  <Component id="jTextField2" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jComboBox1" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="jTextField1" min="-2" pref="284" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnPesquisar" min="-2" pref="99" max="-2" attributes="0"/>
->>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -142,7 +135,6 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-<<<<<<< HEAD
               <EmptySpace pref="19" max="32767" attributes="0"/>
               <Component id="jComboBox1" min="-2" pref="32" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -157,20 +149,6 @@
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="168" max="-2" attributes="0"/>
-=======
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jComboBox1" min="-2" pref="32" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnPesquisar" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
-                  <Component id="jTextField1" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jTextField2" min="-2" pref="34" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="168" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
->>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
           </Group>
       </Group>
     </DimensionLayout>
@@ -228,7 +206,6 @@
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="Auxiliar para altera&#xe7;&#xf5;es"/>
       </Properties>
-<<<<<<< HEAD
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
       </Events>
@@ -237,8 +214,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Nome do Autor a pesquisar:"/>
       </Properties>
-=======
->>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
     </Component>
   </SubComponents>
 </Form>

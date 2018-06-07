@@ -1,15 +1,10 @@
 package trabalhopratico;
 
 import java.io.IOException;
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.xml.sax.SAXException;
-=======
-import java.util.logging.Level;
-import java.util.logging.Logger;
->>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
 
 /**
  *
@@ -39,10 +34,7 @@ public class Frame extends javax.swing.JFrame {
         btnPesquisar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-<<<<<<< HEAD
         jLabel1 = new javax.swing.JLabel();
-=======
->>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -78,7 +70,6 @@ public class Frame extends javax.swing.JFrame {
         jTextField1.setToolTipText("Texto a Pesquisar");
 
         jTextField2.setToolTipText("Auxiliar para alterações");
-<<<<<<< HEAD
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -86,12 +77,15 @@ public class Frame extends javax.swing.JFrame {
         });
 
         jLabel1.setText("Nome do Autor a pesquisar:");
-=======
->>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
 
         jMenuBar1.setName(""); // NOI18N
 
         jMenu2.setText("Menu");
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
 
         jMenuItem2.setText("Criar escritores.xml");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +162,6 @@ public class Frame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-<<<<<<< HEAD
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -179,22 +172,12 @@ public class Frame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                             .addComponent(jTextField1))
-=======
-                    .addComponent(jTextField2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
->>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-<<<<<<< HEAD
                 .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -207,19 +190,6 @@ public class Frame extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-=======
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
->>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
         );
 
         pack();
@@ -231,14 +201,13 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-<<<<<<< HEAD
         try {
-            trabalhopratico.leituraWiki(jTextField2.getText());
-=======
-        // TODO add your handling code here:
-        try {
-            trabalhopratico.leituraWiki("escritores.txt");
->>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
+            Boolean res = trabalhopratico.verificaAutor(jTextField2.getText());
+            if (res == null || res == false) {
+                trabalhopratico.leituraWiki(jTextField2.getText());
+            } else {
+                resultado.setText(trabalhopratico.mostraAutor(jTextField2.getText()));
+            }
         } catch (IOException ex) {
             Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -250,12 +219,16 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-<<<<<<< HEAD
         try {
-            trabalhopratico.leituraWook(jTextField2.getText());
+            Boolean res = trabalhopratico.verificaObras(jTextField2.getText());
+            if (res == null || res == false) {
+                trabalhopratico.leituraWook(jTextField2.getText());
+            } else {
+                resultado.setText(trabalhopratico.mostraObras(HttpRequestFunctions.capitalize(jTextField2.getText())));
+            }
         } catch (IOException ex) {
             Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
@@ -264,9 +237,9 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-          try {
-            trabalhopratico.validaDocumentoDTD("obras.xml","obras.dtd");
-             trabalhopratico.validaDocumentoXSD("obras.xml","obras.xsd");
+        try {
+            trabalhopratico.validaDocumentoDTD("obras.xml", "obras.dtd");
+            trabalhopratico.validaDocumentoXSD("obras.xml", "obras.xsd");
         } catch (IOException ex) {
             Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
@@ -275,57 +248,14 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-         try {
-             trabalhopratico.validaDocumentoDTD("autores.xml","autores.dtd");
-             trabalhopratico.validaDocumentoXSD("autores.xml","autores.xsd");
+        try {
+            trabalhopratico.validaDocumentoDTD("autores.xml", "autores.dtd");
+            trabalhopratico.validaDocumentoXSD("autores.xml", "autores.xsd");
         } catch (IOException ex) {
             Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
             Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
         }
-=======
-        // TODO add your handling code here:
-//        String nome = "Oscar Wilde";
-//
-//        String res;
-//        try {
-//            res = trabalhopratico.procuraLinkWook(nome);
-//
-//            trabalhopratico.leituraWook("escritores.txt");
-//        } catch (IOException ex) {
-//            Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
-        trabalhopratico.juntaXML("escritores.xml", "juntar.xsl");
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-        trabalhopratico.transformaHtml("escritores.xml", "fotohtml.xsl");
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
-//          try {
-//            // TODO add your handling code here:
-//            trabalhopratico.validarDocumentoObras("obras.xml");
-//        } catch (IOException ex) {
-//            Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-//         try {
-//            // TODO add your handling code here:
-//             // validarDocumentoEscritores("escritores.xml");
-//        } catch (IOException ex) {
-//            Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
->>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -414,13 +344,14 @@ public class Frame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
-<<<<<<< HEAD
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-=======
->>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
