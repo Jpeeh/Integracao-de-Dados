@@ -213,7 +213,7 @@ public class trabalhopratico {
         return null;
     }
 
-    public static String procuralink_foto(String nome) throws IOException {
+public static String procuralink_foto(String nome) throws IOException {
         String link = "https://pt.wikipedia.org/wiki/";
         String er = "<div class=\"floatnone\"><a href=\"/wiki/[^\"]*\" class=\"image\" title=\"[^\"]*\"><img alt=\"[^\"]*\" src=\"([^\"]*)\" width=\"[^\"]*\" height=\"[^\"]*\" srcset=\"[^\"]*\" data-file-width=\"[^\"]*\" data-file-height=\"[^\"]*\" /></a></div>";
         HttpRequestFunctions.httpRequest1(link, nome, "autores.html");
@@ -230,7 +230,7 @@ public class trabalhopratico {
             Matcher m = p.matcher(linha);
             if (m.find()) {
                 ler.close();
-                res = m.group(1);
+                res = "http:"+m.group(1);
                 return res;
             }
         }
@@ -726,6 +726,40 @@ public class trabalhopratico {
         return res;
     }
 
+    
+    public static String mudaDataNascimento(String procura, String nova) {
+
+        Element raiz;
+        String res = null;
+        Document doc = XMLJDomFunctions.lerDocumentoXML("autores.xml");
+        if (doc == null) {
+            res = "O ficheiro não existe";
+            return res;
+        } else {
+            raiz = doc.getRootElement();
+        }
+
+        List todosEscritores = raiz.getChildren("Autor");
+        boolean found = false;
+
+        for (int i = 0; i < todosEscritores.size(); i++) {
+            Element escritor = (Element) todosEscritores.get(i);
+            if (escritor.getChild("Nome").getText().contains(procura)) {
+                escritor.getChild("Data_Nascimento").setText(nova);
+                found = true;
+            }
+        }
+        if (found) {
+            res = "Data de Nascimento do escritor " + procura + " alterada com sucesso!";
+        } else {
+            res = "Nenhum escritor chamado " + procura + " foi encontrado";
+        }
+
+        XMLJDomFunctions.escreverDocumentoParaFicheiro(doc, "autores.xml");
+        return res;
+    }
+    
+    
     public static String pesquisaemFicheiro(String nome_ficheiro, String pesquisa) {
         Document doc = XMLJDomFunctions.lerDocumentoXML(nome_ficheiro);
         List res_pesquisa2 = JaxenFunctions_XPATH.pesquisaXPath(doc, pesquisa); //vai receber o doc XML e a pesquisa XPATH
