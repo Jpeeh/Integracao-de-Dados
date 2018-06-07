@@ -1,11 +1,12 @@
 # Integracao-de-Dados
-Regex Java Project
+Projecto em Java - Integração de Dados com XML
 
--> O QUE FALTA ACABAR:
- - [x] Completar as ER's da Wikipédia ;
- - [x] Completar o trabalho com mais funções para alteração dos Dados no ficheiro .XML;
- - [x] Completar o trabalho com mais funções para as pesquisas XPath .
- 
- -> Verificar em Frame:
- - [x] Função transformarHTML (não está a funcionar ainda!);
- - [x] Função juntar (não está a funcionar ainda!).
+" Com este trabalho pretende-se criar um programa em Java composto por vários Wrappers que obtenham
+dados de fontes heterogéneas, distribuídas e autónomas e possibilitem ao utilizador a visualização dos dados
+de forma integrada.
+O utilizador terá ainda a possibilidade de fazer pesquisas, acrescentar dados que respeitem os esquemas
+adoptados e gerar ficheiros com informação selecionada.
+Para a realização deste trabalho deve usar a Linguagem Java, Expressões regulares e o API JDOM2 para
+manipulação de XML estudado nas aulas práticas. "
+
+
