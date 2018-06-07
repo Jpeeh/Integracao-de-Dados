@@ -274,16 +274,28 @@ public static String procuralink_foto(String nome) throws IOException {
     }
 
     public static void leituraWiki(String linha) throws IOException {
+<<<<<<< HEAD
         String enome, d_nasc, d_morte, nac, gen, link_foto;
+=======
+        String enome, d_nasc, d_morte, nac, gen, prem, local_nasc, link_foto;
+>>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
         int id = 1;
         enome = procuraNome(linha);
         d_nasc = procuraDataNasc(linha);
         d_morte = procura_DataMorte(linha);
         nac = procura_Nacionalidade(linha);
         gen = procuraGeneros(linha);
+<<<<<<< HEAD
         link_foto = procuralink_foto(linha);
 
         Autor aux = new Autor(enome, d_nasc, d_morte, nac, gen, link_foto);
+=======
+        prem = procuraPremios(linha);
+        //local_nasc = procura_localNasc(linha);
+        link_foto = procuralink_foto(linha);
+
+        Autor aux = new Autor(id, enome, d_nasc, d_morte, nac, gen, prem, link_foto);
+>>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
         System.out.println(aux.getNome() + "\t" + aux.getData_nasc() + "\t" + aux.getData_morte() + "\t" + aux.getNacionalidade() + "\t" + aux.getGeneros() + "\t" + aux.getLink_foto());
         adicionaAutor(aux);
         id++;
@@ -534,7 +546,19 @@ public static String procuralink_foto(String nome) throws IOException {
         Document doc = XMLJDomFunctions.lerDocumentoXML(fxml);
         if (doc != null) {
             Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, fxml, fxsl);
+<<<<<<< HEAD
             XMLJDomFunctions.escreverDocumentoParaFicheiro(novo, "fotohtml.html");
+=======
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo, "novohtml.html");
+        }
+    }
+
+    public static void juntaXML(String fxml, String fxsl) {
+        Document doc = XMLJDomFunctions.lerDocumentoXML(fxml);
+        if (doc != null) {
+            Document novo = JDOMFunctions_XSLT.transformaDocumento(doc, fxml, fxsl);
+            XMLJDomFunctions.escreverDocumentoParaFicheiro(novo, "novoxml.xml");
+>>>>>>> 606e66c95626226bea300dadcd81d4e4b92ae64b
         }
     }
 
