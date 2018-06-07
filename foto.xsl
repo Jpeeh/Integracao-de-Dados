@@ -14,7 +14,7 @@
     </xsl:template>
     <xsl:template match="Autor">
         <xsl:for-each select=".">
-            <h3><xsl:value-of select="./Link_Foto"/></h3>
+            <h3><xsl:value-of select="./Nome"/></h3>
             <img>
                 <xsl:attribute name="src">
                     <xsl:value-of select="./Link_Foto"/>

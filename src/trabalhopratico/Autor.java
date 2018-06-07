@@ -7,15 +7,14 @@ package trabalhopratico;
 public class Autor {
     public static int sequencia  = 0;
     public int id;
-    private String nome, data_nasc, data_morte, nacionalidade, generos, premios, link_foto;
+    private String nome, data_nasc, data_morte, nacionalidade, generos, link_foto;
 
-     public Autor(String nome, String data_nasc, String data_morte, String nacionalidade, String generos, String premios, String link_foto) {
+     public Autor(String nome, String data_nasc, String data_morte, String nacionalidade, String generos, String link_foto) {
         this.nome = nome;
         this.data_nasc = data_nasc;
         this.data_morte = data_morte;
         this.nacionalidade = nacionalidade;
         this.generos = generos;
-        this.premios = premios;
         this.generos = generos;
         this.link_foto = link_foto;
         this.id = sequenciaMaisMais();
@@ -39,14 +38,6 @@ public class Autor {
 
     public void setNacionalidade(String nacionalidade) {
         this.nacionalidade = nacionalidade;
-    }
-
-    public String getPremios() {
-        return premios;
-    }
-
-    public void setPremios(String premios) {
-        this.premios = premios;
     }
 
     public String getLink_foto() {
