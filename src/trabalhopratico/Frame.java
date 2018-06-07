@@ -327,12 +327,21 @@ public class Frame extends javax.swing.JFrame {
                                         resultado.setText(res);
                                     }
                                 } else {
-                                    if (x.equals("Pesquisa por titulo ou isbn")) {
-                                        res = trabalhopratico.obterEscritorporTituloouIsbn(jTextField1.getText());
+                                    if (x.equals("Pesquisa por Autor")) {
+                                        res = trabalhopratico.pesquisaporAutor(jTextField1.getText());
                                         if (res == null) {
                                             resultado.setText("Erro!");
                                         } else {
                                             resultado.setText(res);
+                                        }
+                                    } else {
+                                        if (x.equals("Pesquisa por titulo ou isbn")) {
+                                            res = trabalhopratico.obterEscritorporTituloouIsbn(jTextField1.getText());
+                                            if (res == null) {
+                                                resultado.setText("Erro!");
+                                            } else {
+                                                resultado.setText(res);
+                                            }
                                         }
                                     }
                                 }
