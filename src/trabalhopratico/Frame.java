@@ -350,14 +350,20 @@ public class Frame extends javax.swing.JFrame {
                                         resultado.setText(res);
                                     }
                                 } else {
+<<<<<<< HEAD
                                     if (x.equals("Pesquisa por titulo ou isbn")) {
                                         res = trabalhopratico.obterEscritorporTituloouIsbn(HttpRequestFunctions.capitalize(jTextField1.getText()));
+=======
+                                    if (x.equals("Pesquisa por Autor")) {
+                                        res = trabalhopratico.pesquisaporAutor(jTextField1.getText());
+>>>>>>> 8d5130549f6cddc0c87a23fb6644855347470845
                                         if (res == null) {
                                             resultado.setText("Erro!");
                                         } else {
                                             resultado.setText(res);
                                         }
                                     } else {
+<<<<<<< HEAD
                                         if (x.equals("Pesquisa por Autor")) {
                                             res = trabalhopratico.mostraObras(HttpRequestFunctions.capitalize(jTextField1.getText()));
                                             aux = trabalhopratico.mostraAutor(HttpRequestFunctions.capitalize(jTextField1.getText()));
@@ -365,6 +371,14 @@ public class Frame extends javax.swing.JFrame {
                                                 resultado.setText("Erro!");
                                             } else {
                                                 resultado.setText(res + "\n" + aux);
+=======
+                                        if (x.equals("Pesquisa por Titulo ou ISBN")) {
+                                            res = trabalhopratico.obterEscritorporTituloouIsbn(jTextField1.getText());
+                                            if (res == null) {
+                                                resultado.setText("Erro!");
+                                            } else {
+                                                resultado.setText(res);
+>>>>>>> 8d5130549f6cddc0c87a23fb6644855347470845
                                             }
                                         }
                                     }
