@@ -1,9 +1,12 @@
 package trabalhopratico;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import org.jdom2.Document;
 import org.xml.sax.SAXException;
 
 /**
@@ -34,7 +37,7 @@ public class Frame extends javax.swing.JFrame {
         btnPesquisar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -76,7 +79,12 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Nome do Autor a pesquisar:");
+        jTextField3.setText("Criar ou valor original para pesquisas:");
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
 
         jMenuBar1.setName(""); // NOI18N
 
@@ -162,13 +170,15 @@ public class Frame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(btnPesquisar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                             .addComponent(jTextField1))
@@ -187,7 +197,7 @@ public class Frame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -233,7 +243,19 @@ public class Frame extends javax.swing.JFrame {
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
-        trabalhopratico.transformaHtml("escritores.xml", "foto.xsl");
+        Document doc = XMLJDomFunctions.lerDocumentoXML("autores.xml");
+        trabalhopratico.transformaHtml("autores.xml", "foto.xsl");
+        doc = XMLJDomFunctions.lerDocumentoXML("foto.html");
+        String t = XMLJDomFunctions.escreverDocumentoString(doc);
+        JOptionPane.showMessageDialog(this, "Transformação feita com sucesso... a abrir browser...", "XSLT para HTML",
+                JOptionPane.INFORMATION_MESSAGE);
+        String url = "foto.html";
+        File htmlFile = new File(url);
+        try {
+            Desktop.getDesktop().browse(htmlFile.toURI());
+        } catch (IOException ex) {
+            Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -269,18 +291,19 @@ public class Frame extends javax.swing.JFrame {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
-        String res = null;
+        String res = null, aux = null;
         String x = String.valueOf(jComboBox1.getSelectedItem());
         if (x.equals("Remove Escritor")) {
             res = trabalhopratico.removeAutor(jTextField1.getText());
-            if (res == null) {
+            aux = trabalhopratico.removeObra(jTextField1.getText());
+            if (res == null || aux == null) {
                 resultado.setText("Erro!");
             } else {
-                resultado.setText(res);
+                resultado.setText(res + "\n" + aux);
             }
         } else {
             if (x.equals("Muda data de Nascimento")) {
-                res = trabalhopratico.mudaDataNascimento(jTextField1.getText(), jTextField2.getText());
+                res = trabalhopratico.mudaDataNascimento(HttpRequestFunctions.capitalize(jTextField1.getText()), jTextField2.getText());
                 if (res == null) {
                     resultado.setText("Erro!");
                 } else {
@@ -288,7 +311,7 @@ public class Frame extends javax.swing.JFrame {
                 }
             } else {
                 if (x.equals("Muda Nome")) {
-                    res = trabalhopratico.mudaNomeAutor(jTextField1.getText(), jTextField2.getText());
+                    res = trabalhopratico.mudaNomeAutor(HttpRequestFunctions.capitalize(jTextField1.getText()), HttpRequestFunctions.capitalize(jTextField2.getText()));
                     if (res == null) {
                         resultado.setText("Erro!");
                     } else {
@@ -296,7 +319,7 @@ public class Frame extends javax.swing.JFrame {
                     }
                 } else {
                     if (x.equals("Muda Nacionalidade")) {
-                        res = trabalhopratico.mudaNacionalidade(jTextField1.getText(), jTextField2.getText());
+                        res = trabalhopratico.mudaNacionalidade(HttpRequestFunctions.capitalize(jTextField1.getText()), HttpRequestFunctions.capitalize(jTextField2.getText()));
                         if (res == null) {
                             resultado.setText("Erro!");
                         } else {
@@ -304,7 +327,7 @@ public class Frame extends javax.swing.JFrame {
                         }
                     } else {
                         if (x.equals("Muda data de Morte")) {
-                            res = trabalhopratico.mudaDataMorte(jTextField1.getText(), jTextField2.getText());
+                            res = trabalhopratico.mudaDataMorte(HttpRequestFunctions.capitalize(jTextField1.getText()), jTextField2.getText());
                             if (res == null) {
                                 resultado.setText("Erro!");
                             } else {
@@ -312,7 +335,7 @@ public class Frame extends javax.swing.JFrame {
                             }
                         } else {
                             if (x.equals("Pesquisa por Nacionalidade")) {
-                                res = trabalhopratico.pesquisaporNacionalidade(jTextField1.getText());
+                                res = trabalhopratico.pesquisaporNacionalidade(HttpRequestFunctions.capitalize(jTextField1.getText()));
                                 if (res == null) {
                                     resultado.setText("Erro!");
                                 } else {
@@ -320,7 +343,7 @@ public class Frame extends javax.swing.JFrame {
                                 }
                             } else {
                                 if (x.equals("Pesquisa por Genero")) {
-                                    res = trabalhopratico.pesquisaporGenero(jTextField1.getText());
+                                    res = trabalhopratico.pesquisaporGenero(HttpRequestFunctions.capitalize(jTextField1.getText()));
                                     if (res == null) {
                                         resultado.setText("Erro!");
                                     } else {
@@ -328,11 +351,21 @@ public class Frame extends javax.swing.JFrame {
                                     }
                                 } else {
                                     if (x.equals("Pesquisa por titulo ou isbn")) {
-                                        res = trabalhopratico.obterEscritorporTituloouIsbn(jTextField1.getText());
+                                        res = trabalhopratico.obterEscritorporTituloouIsbn(HttpRequestFunctions.capitalize(jTextField1.getText()));
                                         if (res == null) {
                                             resultado.setText("Erro!");
                                         } else {
                                             resultado.setText(res);
+                                        }
+                                    } else {
+                                        if (x.equals("Pesquisa por Autor")) {
+                                            res = trabalhopratico.mostraObras(HttpRequestFunctions.capitalize(jTextField1.getText()));
+                                            aux = trabalhopratico.mostraAutor(HttpRequestFunctions.capitalize(jTextField1.getText()));
+                                            if (res == null || aux == null) {
+                                                resultado.setText("Erro!");
+                                            } else {
+                                                resultado.setText(res + "\n" + aux);
+                                            }
                                         }
                                     }
                                 }
@@ -351,6 +384,10 @@ public class Frame extends javax.swing.JFrame {
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
 
     }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -390,7 +427,6 @@ public class Frame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -404,6 +440,7 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextArea resultado;
     // End of variables declaration//GEN-END:variables
 }

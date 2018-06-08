@@ -2,102 +2,12 @@
 <!DOCTYPE Obras SYSTEM "obras.dtd">
 <Obras xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="obras.xsd">
      <Livro>
-          <Codigo_Autor>19466</Codigo_Autor>
-          <Autor>Pablo Neruda</Autor>
-          <Titulo>Quintana de Bolso</Titulo>
-          <ISBN>9788525407030</ISBN>
-          <Ano>08-2005</Ano>
-          <Preco>8,48€</Preco>
-          <Editor>Dinalivro</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19466</Codigo_Autor>
-          <Autor>Pablo Neruda</Autor>
-          <Titulo>Vinte Poemas de Amor e Uma Canção Desesperada</Titulo>
-          <ISBN>9789896413378</ISBN>
-          <Ano>12-2012</Ano>
-          <Preco>12,00€</Preco>
-          <Editor>Relógio D'Água</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19466</Codigo_Autor>
-          <Autor>Pablo Neruda</Autor>
-          <Titulo>O Carteiro de Pablo Neruda</Titulo>
-          <ISBN>9789722058742</ISBN>
-          <Ano>10-2015</Ano>
-          <Preco>13,90€</Preco>
-          <Editor>Dom Quixote</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19466</Codigo_Autor>
-          <Autor>Pablo Neruda</Autor>
-          <Titulo>O Carteiro de Pablo Neruda</Titulo>
-          <ISBN>9789722058742</ISBN>
-          <Ano>10-2015</Ano>
-          <Preco>13,90€</Preco>
-          <Editor>Dom Quixote</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19466</Codigo_Autor>
-          <Autor>Pablo Neruda</Autor>
-          <Titulo>Confesso que Vivi</Titulo>
-          <ISBN>9789721060128</ISBN>
-          <Ano>07-2009</Ano>
-          <Preco>25,14€</Preco>
-          <Editor>Publicações Europa-América</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19466</Codigo_Autor>
-          <Autor>Pablo Neruda</Autor>
-          <Titulo>Vinte Poemas de Amor e Uma Canção Desesperada</Titulo>
-          <ISBN>9789896413378</ISBN>
-          <Ano>12-2012</Ano>
-          <Preco>12,00€</Preco>
-          <Editor>Relógio D'Água</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19466</Codigo_Autor>
-          <Autor>Pablo Neruda</Autor>
-          <Titulo>Vinte Poemas de Amor e Uma Canção Desesperada</Titulo>
-          <ISBN>9789896413378</ISBN>
-          <Ano>12-2012</Ano>
-          <Preco>12,00€</Preco>
-          <Editor>Relógio D'Água</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19466</Codigo_Autor>
-          <Autor>Pablo Neruda</Autor>
-          <Titulo>Vinte Poemas de Amor e Uma Canção Desesperada</Titulo>
-          <ISBN>9789896413378</ISBN>
-          <Ano>12-2012</Ano>
-          <Preco>12,00€</Preco>
-          <Editor>Relógio D'Água</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19466</Codigo_Autor>
-          <Autor>Pablo Neruda</Autor>
-          <Titulo>Vinte Poemas de Amor e Uma Canção Desesperada</Titulo>
-          <ISBN>9789896413378</ISBN>
-          <Ano>12-2012</Ano>
-          <Preco>12,00€</Preco>
-          <Editor>Relógio D'Água</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19466</Codigo_Autor>
-          <Autor>Pablo Neruda</Autor>
-          <Titulo>O Carteiro de Pablo Neruda</Titulo>
-          <ISBN>9789722058742</ISBN>
-          <Ano>10-2015</Ano>
-          <Preco>13,90€</Preco>
-          <Editor>Dom Quixote</Editor>
-     </Livro>
-     <Livro>
-          <Codigo_Autor>19466</Codigo_Autor>
-          <Autor>Pablo Neruda</Autor>
-          <Titulo>O Carteiro de Pablo Neruda</Titulo>
-          <ISBN>9789722058742</ISBN>
-          <Ano>10-2015</Ano>
-          <Preco>13,90€</Preco>
-          <Editor>Dom Quixote</Editor>
+          <Codigo_Autor>19398</Codigo_Autor>
+          <Autor>Oscar Wilde</Autor>
+          <Titulo>O Menino-Estrela</Titulo>
+          <ISBN>978-972-0-71787-0</ISBN>
+          <Ano>10-2016</Ano>
+          <Preco>13,30€</Preco>
+          <Editor>Porto Editora</Editor>
      </Livro>
 </Obras>
