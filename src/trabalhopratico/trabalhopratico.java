@@ -788,12 +788,8 @@ public class trabalhopratico {
     }
 
     public static String pesquisaporGenero(String genero) {
-        return pesquisaemAutores("/autores/Autor[contains(.,\"" + genero + "\")]/Nome"); //pesquisa o genero passada como argumento
+        return pesquisaemAutores("/autores/Autor[contains(.,\"" + genero + "\")]/Nome"); //pesquisa a nacionalidade passada como argumento
 
-    }
-    public static String pesquisaporAutor(String autor) {
-        return pesquisaemAutores("/autores/Autor[contains(.,\"" + autor + "\")]/Nacionalidade"); //pesquisa o autor passada como argumento
-        
     }
 
     public static String obterEscritorporTituloouIsbn(String tituloIsbn) {
